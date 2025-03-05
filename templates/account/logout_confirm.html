@@ -1,0 +1,48 @@
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Confirm Logout</h2>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <p class="text-lg text-gray-600 mb-6 text-center">Are you sure you want to sign out?</p>
+            <div class="flex justify-between">
+                <button type="submit" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition duration-300 font-semibold">
+                    Yes, Logout
+                </button>
+                <a href="{% url 'home' %}" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition duration-300 font-semibold">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<!-- account/logout_confirm.html -->
+ 
+{% comment %} <div class="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Confirm Logout</h2>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <p class="text-lg text-gray-600 mb-6 text-center">Are you sure you want to sign out?</p>
+            <div class="flex justify-between">
+                <button type="submit" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition duration-300 font-semibold">
+                    Yes, Logout
+                </button>
+                <a href="{% url 'profile' %}" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition duration-300 font-semibold">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div> {% endcomment %}

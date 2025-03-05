@@ -1,0 +1,30 @@
+{% comment %} {% extends "base.html" %}
+
+{% block content %} {% endcomment %}
+<div class="card">
+    <div class="card-header">
+        <h3>{{ person.name }}</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Birth Date</dt>
+            <dd class="col-sm-9">{{ person.birth_date }}</dd>
+            
+            <dt class="col-sm-3">Age</dt>
+            <dd class="col-sm-9">
+                {{ age.years }} years, 
+                {{ age.months }} months, 
+                {{ age.days }} days
+            </dd>
+            
+            <dt class="col-sm-3">Created</dt>
+            <dd class="col-sm-9">{{ person.created_at|date:"M d, Y H:i" }}</dd>
+        </dl>
+        
+        <div class="mt-4">
+            <a href="{% url 'person-update' person.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'person-list' %}" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+{% comment %} {% endblock %} {% endcomment %}

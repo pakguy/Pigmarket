@@ -1,0 +1,72 @@
+{% extends "firstlabel/main.html" %}
+{% block content %}
+    <main class="content ml-0 mt-16 p-4 transition-all duration-300 flex justify-center">
+        <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg w-full max-w-2xl">
+            <h2 class="text-3xl font-semibold mb-6 text-center">TestP Details</h2>
+            <dl class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <dt class="font-medium text-gray-700">TestP DATE</dt>
+                    <dd class="text-gray-900">{{ TestP.date.date }}</dd>
+                </div>
+                <div>
+                    <dt class="font-medium text-gray-700"> BOAR ID</dt>
+                    <dd class="text-gray-900">{{ TestP.status }}</dd>
+                </div>
+                <div>
+                    <dt class="font-medium text-gray-700">SOW ID</dt>
+                    <dd class="text-gray-900">{{ TestP.health }}</dd>
+                </div>
+            </dl>
+            <div class="mt-6 flex justify-end space-x-4">
+                <a href="{% url 'testP-update' TestP.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">Edit</a>
+                <a href="{% url 'testP-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-200">Back to List</a>
+            </div>
+        </div>
+    </main>
+{% comment %} <main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+     <h2 class="text-2xl mb-2">
+        
+     </h2>
+                <dl class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <dt class="font-medium text-gray-700">DATE FARROWED</dt>
+                        <dd class="text-gray-900">{{ TestP.birth_date.date }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">DATE WEAN</dt>
+                        <dd class="text-gray-900">{{ TestP.date_wean }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">NUMBER WEAN</dt>
+                        <dd class="text-gray-900">{{ TestP.no_wean }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">AVERAGE WEIGHT</dt>
+                        <dd class="text-gray-900">{{ TestP.avg_weight }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">MORTALITY</dt>
+                        <dd class="text-gray-900">{{ TestP.mortality }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">TOTAL LEFT</dt>
+                        <dd class="text-gray-900">{{ TestP.total_left }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">LITTER AGE</dt>
+                        <dd class="text-gray-900">{{ TestP.age_string }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">MATURITY</dt>
+                        <dd class="text-gray-900">{{ TestP.maturity }}</dd>
+                    </div>
+                </dl>
+                <div class="mt-6 flex justify-end space-x-4">
+                    <a href="{% url 'TestP-update' TestP.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Edit</a>
+                    <a href="{% url 'TestP-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Back to List</a>
+                </div>
+    </div>
+
+</main> {% endcomment %}
+{% endblock %} 

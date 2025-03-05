@@ -1,0 +1,17 @@
+{% comment %} {% extends "base.html" %}
+
+{% block content %} {% endcomment %}
+<div class="card border-danger">
+    <div class="card-header bg-danger text-white">
+        <h3>Confirm Deletion</h3>
+    </div>
+    <div class="card-body">
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            <a href="{% url 'person-list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% comment %} {% endblock %} {% endcomment %}

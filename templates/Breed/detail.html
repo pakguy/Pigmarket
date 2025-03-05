@@ -1,0 +1,64 @@
+{% extends "firstlabel/main.html" %}
+{% block content %}
+    <main class="content ml-0 mt-16 p-4 transition-all duration-300 flex justify-center">
+        <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg w-full max-w-2xl">
+            <h2 class="text-3xl font-semibold mb-6 text-center">Breed Details</h2>
+            <dl class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <dt class="font-medium text-gray-700">Breed DATE</dt>
+                    <dd class="text-gray-900">{{ Breed.name }}</dd>
+                </div>
+            </dl>
+            <div class="mt-6 flex justify-end space-x-4">
+                <a href="{% url 'Breed-update' Breed.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">Edit</a>
+                <a href="{% url 'Breed-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-200">Back to List</a>
+            </div>
+        </div>
+    </main>
+{% comment %} <main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+     <h2 class="text-2xl mb-2">
+        
+     </h2>
+                <dl class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <dt class="font-medium text-gray-700">DATE FARROWED</dt>
+                        <dd class="text-gray-900">{{ Breed.birth_date.date }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">DATE WEAN</dt>
+                        <dd class="text-gray-900">{{ Breed.date_wean }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">NUMBER WEAN</dt>
+                        <dd class="text-gray-900">{{ Breed.no_wean }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">AVERAGE WEIGHT</dt>
+                        <dd class="text-gray-900">{{ Breed.avg_weight }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">MORTALITY</dt>
+                        <dd class="text-gray-900">{{ Breed.mortality }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">TOTAL LEFT</dt>
+                        <dd class="text-gray-900">{{ Breed.total_left }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">Breed AGE</dt>
+                        <dd class="text-gray-900">{{ Breed.age_string }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">MATURITY</dt>
+                        <dd class="text-gray-900">{{ Breed.maturity }}</dd>
+                    </div>
+                </dl>
+                <div class="mt-6 flex justify-end space-x-4">
+                    <a href="{% url 'Breed-update' Breed.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Edit</a>
+                    <a href="{% url 'Breed-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Back to List</a>
+                </div>
+    </div>
+
+</main> {% endcomment %}
+{% endblock %} 

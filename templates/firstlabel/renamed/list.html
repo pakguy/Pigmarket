@@ -1,0 +1,147 @@
+{% extends "firstlabel/main.html" %}
+
+{% block content %}
+
+<main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+     <h2 class="text-2xl mb-2">
+      Datatable Simple
+     </h2>
+<h2>Inven List</h2>
+<a href="{% url 'Inven-create' %}" class="btn btn-primary mb-3">Add Inven</a>
+
+    <form method="get" class="mb-3">
+        <input type="text" 
+               name="q" 
+               value="{{ search_query }}"
+               placeholder="Search names or dates..."
+               class="form-control">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+    <table id="dataTable" class="table table-hover" class="w-full border-collapse">
+     <thead>
+      <tr>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        NUMBER
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        TAG COLOUR
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        BREED
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        SEX
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        WEIGHT
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        STATUS
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        ARRIVAL
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        LOCATION
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        Birth Date
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        Age
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        Actions
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+      </tr>
+     </thead>
+     <tbody>
+        {% for Inven in Invens %} 
+        <tr>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.number }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.tag_colour }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.breed }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.sex }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.weight }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.status }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.arrival }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.location }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.birth_date }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ Inven.age_string }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+           
+            <a href="{% url 'Inven-detail' Inven.pk %}" class="btn btn-sm btn-info">View</a>
+            <a href="{% url 'Inven-update' Inven.pk %}" class="btn btn-sm btn-warning">Edit</a>
+            <a href="{% url 'Inven-delete' Inven.pk %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No Inven found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        
+        <li class="page-item active">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
+</main>
+{% endif %}
+{% endblock %}

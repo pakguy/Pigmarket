@@ -1,0 +1,195 @@
+
+{% extends "firstlabel/main.html" %}
+{% load widget_tweaks %}
+
+{% block content %} 
+<main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+     <h2 class="text-2xl mb-2">
+      Datatable Simple
+     </h2>
+<h2>{% if object %}Edit{% else %}Create{% endif %} Inven</h2>
+<form method="post">
+    {% csrf_token %}
+{% comment %} 
+
+
+<div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.number.id_for_label }}">
+        {{ form.number.label }}
+    </label>
+    {% render_field form.number class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.number.errors %}
+        <div class="invalid-feedback d-block">{{ form.number.errors }}</div>
+    {% endif %}
+</div>       
+{% endcomment %}
+
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.number.id_for_label }}">
+        {{ form.number.label }}
+    </label>
+    {% render_field form.number class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.number.errors %}
+        <div class="invalid-feedback d-block">{{ form.number.errors }}</div>
+    {% endif %}
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.tag_colour.id_for_label }}">
+        {{ form.tag_colour.label }}
+    </label>
+    {% render_field form.tag_colour class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.tag_colour.errors %}
+        <div class="invalid-feedback d-block">{{ form.tag_colour.errors }}</div>
+    {% endif %}
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.breed.id_for_label }}">
+        {{ form.breed.label }}
+    </label>
+    {% render_field form.breed class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.breed.errors %}
+        <div class="invalid-feedback d-block">{{ form.breed.errors }}</div>
+    {% endif %}
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.sex.id_for_label }}">
+        {{ form.sex.label }}
+    </label>
+    {% render_field form.sex class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.sex.errors %}
+        <div class="invalid-feedback d-block">{{ form.sex.errors }}</div>
+    {% endif %}
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.birth_date.id_for_label }}">
+        {{ form.birth_date.label }}
+    </label>
+    {% render_field form.birth_date class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.birth_date.errors %}
+        <div class="invalid-feedback d-block">{{ form.birth_date.errors }}</div>
+    {% endif %}
+    
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.weight.id_for_label }}">
+        {{ form.weight.label }}
+    </label>
+    {% render_field form.weight class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.weight.errors %}
+        <div class="invalid-feedback d-block">{{ form.weight.errors }}</div>
+    {% endif %}
+    
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.status.id_for_label }}">
+        {{ form.status.label }}
+    </label>
+    {% render_field form.status class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.status.errors %}
+        <div class="invalid-feedback d-block">{{ form.status.errors }}</div>
+    {% endif %}
+    
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.arrival.id_for_label }}">
+        {{ form.arrival.label }}
+    </label>
+    {% render_field form.arrival class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.arrival.errors %}
+        <div class="invalid-feedback d-block">{{ form.arrival.errors }}</div>
+    {% endif %}
+    
+    <div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.location.id_for_label }}">
+        {{ form.location.label }}
+    </label>
+    {% render_field form.location class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.location.errors %}
+        <div class="invalid-feedback d-block">{{ form.location.errors }}</div>
+    {% endif %}
+    
+{% comment %} 
+
+    <div class="mb-4">
+     <label class="block text-gray-700 mb-2" for="name">
+        TagID
+     </label>
+        
+      <input class="w-full p-2 border border-gray-300 rounded-md"  {{ form.number }}
+       
+        {% if form.number.errors %}
+            <div class="invalid-feedback d-block">{{ form.number.errors }}</div>
+        {% endif %}
+    
+    </div>
+    <div class="mb-4">
+     <label class="block text-gray-700 mb-2" for="name">
+        Tag colour
+     </label>
+        
+      <input class="w-full p-2 border border-gray-300 rounded-md"  {{ form.tag_colour }}
+       
+        {% if form.tag_colour.errors %}
+            <div class="invalid-feedback d-block">{{ form.tag_colour.errors }}</div>
+        {% endif %}
+    
+    </div>
+    <div class="mb-3">
+    </div>
+    <div class="mb-3">
+        {{ form.tag_colour.label_tag }}
+        {{ form.tag_colour }}
+        {% if form.tag_colour.errors %}
+            <div class="invalid-feedback d-block">{{ form.tag_colour.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.breed.label_tag }}
+        {{ form.breed }}
+        {% if form.breed.errors %}
+            <div class="invalid-feedback d-block">{{ form.breed.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.sex.label_tag }}
+        {{ form.sex }}
+        {% if form.sex.errors %}
+            <div class="invalid-feedback d-block">{{ form.sex.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.birth_date.label_tag }}
+        {{ form.birth_date }}
+        {% if form.birth_date.errors %}
+            <div class="invalid-feedback d-block">{{ form.birth_date.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.weight.label_tag }}
+        {{ form.weight }}
+        {% if form.weight.errors %}
+            <div class="invalid-feedback d-block">{{ form.weight.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.status.label_tag }}
+        {{ form.status }}
+        {% if form.status.errors %}
+            <div class="invalid-feedback d-block">{{ form.status.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.arrival.label_tag }}
+        {{ form.arrival }}
+        {% if form.arrival.errors %}
+            <div class="invalid-feedback d-block">{{ form.arrival.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.location.label_tag }}
+        {{ form.location }}
+        {% if form.location.errors %}
+            <div class="invalid-feedback d-block">{{ form.location.errors }}</div>
+        {% endif %}
+    </div> 
+{% endcomment %}
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'Inven-list' %}" class="btn btn-outline-secondary">Cancel</a>
+</form>
+</div>
+</main>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "firstlabel/main.html" %}
+
+{% block content %}
+<main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+   
+     </h2>
+                <dl class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <dt class="font-medium text-gray-700">TAG ID</dt>
+                        <dd class="text-gray-900">{{ Inven.number }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700"> TAG COLOUR </dt>
+                        <dd class="text-gray-900">{{ Inven.tag_colour }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">BREED</dt>
+                        <dd class="text-gray-900">{{ Inven.breed }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">SEX</dt>
+                        <dd class="text-gray-900">{{ Inven.sex }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">WEIGHT</dt>
+                        <dd class="text-gray-900">{{ Inven.weight }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">ARRIVAL</dt>
+                        <dd class="text-gray-900">{{ Inven.arrival }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">LOCATION</dt>
+                        <dd class="text-gray-900">{{ Inven.location }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">Birth Date</dt>
+                        <dd class="text-gray-900">{{ Inven.birth_date }}</dd>
+                    </div>
+                    <div>
+                        <dt class="font-medium text-gray-700">AGE</dt>
+                        <dd class="text-gray-900">
+                            {{ age.years }} years, 
+                            {{ age.months }} months, and 
+                            {{ age.days }} days</dd>
+                    </div>
+                <div class="mt-6 flex justify-end space-x-4">
+                    <a href="{% url 'Inven-update' Inven.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Edit</a>
+                    <a href="{% url 'Inven-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Back to List</a>
+                </div>
+    </div>
+
+</main>
+        {% comment %} <h2 class="text-2xl mb-2">
+        
+<div class="card">
+    <div class="card-header">
+        <h3>{{ Inven.number }}</h3>
+        <h3>{{ Inven.tag_colour }}</h3>
+        <h3>{{ Inven.breed }}</h3>
+        <h3>{{ Inven.sex }}</h3>
+        <h3>{{ Inven.weight }}</h3>
+        <h3>{{ Inven.arrival }}</h3>
+        <h3>{{ Inven.location }}</h3>
+
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">NUMBER</dt>
+            <dd class="col-sm-9">{{ Inven.number }}</dd>
+
+            <dt class="col-sm-3">TAG COLOUR</dt>
+            <dd class="col-sm-9">{{ Inven.tag_colour }}</dd>
+
+            <dt class="col-sm-3">BREED</dt>
+            <dd class="col-sm-9">{{ Inven.breed }}</dd>
+
+            <dt class="col-sm-3">SEX</dt>
+            <dd class="col-sm-9">{{ Inven.sex }}</dd>
+
+            <dt class="col-sm-3">WEIGHT</dt>
+            <dd class="col-sm-9">{{ Inven.weight }}</dd>
+
+            <dt class="col-sm-3">ARRIVAL</dt>
+            <dd class="col-sm-9">{{ Inven.arrival }}</dd>
+
+            <dt class="col-sm-3">STATUS</dt>
+            <dd class="col-sm-9">{{ Inven.status}}</dd>
+
+            <dt class="col-sm-3">LOCATION</dt>
+            <dd class="col-sm-9">{{ Inven.location }}</dd>
+
+            <dt class="col-sm-3">Birth Date</dt>
+            <dd class="col-sm-9">{{ Inven.birth_date }}</dd>
+            
+            <dt class="col-sm-3">Age</dt>
+            <dd class="col-sm-9">
+                {{ age.years }} years, 
+                {{ age.months }} months, 
+                {{ age.days }} days
+            </dd>
+            
+            <dt class="col-sm-3">Created</dt>
+            <dd class="col-sm-9">{{ Inven.created_at|date:"M d, Y H:i" }}</dd>
+        </dl>
+        
+        <div class="mt-4">
+            <a href="{% url 'Inven-update' Inven.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'Inven-list' %}" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+</div> {% endcomment %}
+{% endblock %}

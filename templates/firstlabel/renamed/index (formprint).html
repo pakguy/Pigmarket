@@ -1,0 +1,276 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Form Example
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <style>
+   .navbar {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .navbar:hover {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                opacity: 1;
+            }
+        }
+  </style>
+  <script>
+   function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const content = document.querySelector('.content');
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('full-width');
+        }
+
+        function printForm() {
+            const printContent = document.querySelector('.form-container').innerHTML;
+            const originalContent = document.body.innerHTML;
+            const timestamp = new Date().toLocaleString();
+            document.body.innerHTML = `
+                <div class="p-4">
+                    <h1 class="text-2xl font-bold mb-4">MARKETPLACE</h1>
+                    <p class="mb-4">${timestamp}</p>
+                    ${printContent}
+                </div>
+            `;
+            window.print();
+            document.body.innerHTML = originalContent;
+            window.location.reload();
+        }
+  </script>
+ </head>
+ <body class="bg-gray-100 font-roboto">
+  <!-- Navbar Section -->
+  <header class="navbar fixed top-0 w-full bg-white border-b border-gray-300 flex justify-between items-center p-4 z-50">
+   <div class="toggle-btn text-xl cursor-pointer" onclick="toggleSidebar()">
+    <i class="fas fa-bars">
+    </i>
+   </div>
+   <div class="title text-xl font-bold">
+    MARKETPLACE
+   </div>
+   <div class="search relative ml-auto">
+    <input class="p-2 pl-4 pr-10 border border-gray-300 rounded-md w-64" placeholder="Search here" type="text"/>
+    <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+    </i>
+   </div>
+   <div class="icons flex items-center ml-4">
+    <i class="fas fa-cog text-xl cursor-pointer ml-4">
+    </i>
+    <div class="notification relative ml-4">
+     <i class="fas fa-bell text-xl cursor-pointer">
+     </i>
+     <div class="badge absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1.5">
+      11
+     </div>
+    </div>
+    <i class="fas fa-user-circle text-xl cursor-pointer ml-4">
+    </i>
+   </div>
+  </header>
+  <!-- Sidebar Section -->
+  <aside class="sidebar hidden fixed top-12 w-64 bg-white border-r border-gray-300 h-full overflow-y-auto transition-transform duration-300">
+   <div class="profile flex items-center p-4">
+    <img alt="Profile picture of Brooklyn Alice" class="rounded-full w-10 h-10 mr-2" height="40" src="https://storage.googleapis.com/a1aa/image/1VaOdUS039m2IK2QpGjUzm8jEbwv_du0HynmP-1EX4M.jpg" width="40"/>
+    <div class="name font-medium">
+     Brooklyn Alice
+    </div>
+   </div>
+   <ul class="menu list-none p-0 m-0">
+    <li class="p-4 cursor-pointer hover:bg-gray-200 active:bg-gray-300 flex items-center">
+     <i class="fas fa-tachometer-alt mr-2">
+     </i>
+     Dashboards
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-file-alt mr-2">
+     </i>
+     Pages
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-user mr-2">
+     </i>
+     Account
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-th mr-2">
+     </i>
+     Applications
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-shopping-cart mr-2">
+     </i>
+     Ecommerce
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-users mr-2">
+     </i>
+     Team
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-folder mr-2">
+     </i>
+     Projects
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-lock mr-2">
+     </i>
+     Authentication
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-book mr-2">
+     </i>
+     Basic
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+     <i class="fas fa-cogs mr-2">
+     </i>
+     Components
+    </li>
+   </ul>
+  </aside>
+  <!-- Main Content Section -->
+  <main class="content full-width ml-0 mt-16 p-4 transition-all duration-300">
+   <div class="form-container bg-white border border-gray-300 rounded-md p-4">
+    <h2 class="text-2xl mb-2">
+     Form Example
+    </h2>
+    <p class="text-gray-600 mb-4">
+     A simple form example with various input fields.
+    </p>
+    <form>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2" for="name">
+       Name
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" id="name" name="name" placeholder="Enter your name" type="text"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2" for="email">
+       Email
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" id="email" name="email" placeholder="Enter your email" type="email"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2" for="password">
+       Password
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" id="password" name="password" placeholder="Enter your password" type="password"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2" for="confirm-password">
+       Confirm Password
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" id="confirm-password" name="confirm-password" placeholder="Confirm your password" type="password"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2" for="gender">
+       Gender
+      </label>
+      <select class="w-full p-2 border border-gray-300 rounded-md" id="gender" name="gender">
+       <option value="male">
+        Male
+       </option>
+       <option value="female">
+        Female
+       </option>
+       <option value="other">
+        Other
+       </option>
+      </select>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2" for="bio">
+       Bio
+      </label>
+      <textarea class="w-full p-2 border border-gray-300 rounded-md" id="bio" name="bio" placeholder="Tell us about yourself" rows="4">
+      </textarea>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2">
+       Hobbies
+      </label>
+      <div class="flex items-center mb-2">
+       <input class="mr-2" id="hobby1" name="hobbies" type="checkbox" value="reading"/>
+       <label for="hobby1">
+        Reading
+       </label>
+      </div>
+      <div class="flex items-center mb-2">
+       <input class="mr-2" id="hobby2" name="hobbies" type="checkbox" value="traveling"/>
+       <label for="hobby2">
+        Traveling
+       </label>
+      </div>
+      <div class="flex items-center mb-2">
+       <input class="mr-2" id="hobby3" name="hobbies" type="checkbox" value="cooking"/>
+       <label for="hobby3">
+        Cooking
+       </label>
+      </div>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2">
+       Upload Profile Picture
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" type="file"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2">
+       Date of Birth
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" type="date"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2">
+       Time of Appointment
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" type="time"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2">
+       Favorite Color
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" type="color"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 mb-2">
+       Range
+      </label>
+      <input class="w-full p-2 border border-gray-300 rounded-md" type="range"/>
+     </div>
+     <div class="flex justify-between">
+      <button class="w-1/2 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mr-2" type="submit">
+       Submit
+      </button>
+      <button class="w-1/2 bg-green-500 text-white p-2 rounded-md hover:bg-green-600 ml-2" onclick="printForm()" type="button">
+       Print
+      </button>
+     </div>
+    </form>
+   </div>
+  </main>
+ </body>
+</html>
+
+
+
+
+<div class="mb-4">
+    <label class="block text-gray-700 mb-2" for="{{ form.breed.id_for_label }}">
+        {{ form.breed.label }}
+    </label>
+    {% render_field form.breed class="w-full p-2 border border-gray-300 rounded-md" placeholder="Enter breed" %}
+    {% if form.breed.errors %}
+        <div class="invalid-feedback d-block">{{ form.breed.errors }}</div>
+    {% endif %}
+</div>      

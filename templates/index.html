@@ -1,0 +1,201 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Blog Page
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <style>
+   body {
+            font-family: 'Roboto', sans-serif;
+        }
+  </style>
+  <script>
+   function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.querySelector('.dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const cogIcon = document.querySelector('.fa-cog');
+            cogIcon.addEventListener('click', toggleDropdown);
+        });
+  </script>
+ </head>
+ <body class="bg-gray-100 flex">
+  <!-- Navbar Section -->
+  <div class="navbar w-full bg-white border-b border-gray-300 p-4 fixed top-0 z-50 flex justify-between items-center">
+   <div class="flex items-center">
+    <div class="toggle-btn text-xl cursor-pointer mr-4" onclick="toggleSidebar()">
+     <i class="fas fa-bars">
+     </i>
+    </div>
+    <div class="title text-xl font-bold">
+     MARKETPLACE
+    </div>
+   </div>
+   <div class="search relative ml-auto">
+    <input class="p-2 pl-4 pr-10 border border-gray-300 rounded-md w-64" placeholder="Search here" type="text"/>
+    <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+    </i>
+   </div>
+   <div class="icons flex items-center ml-4 relative">
+    <i class="fas fa-cog text-xl cursor-pointer">
+    </i>
+    <div class="dropdown hidden absolute top-10 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-50">
+     <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#">
+      Settings
+     </a>
+     <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#">
+      Profile
+     </a>
+     <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#">
+      Logout
+     </a>
+    </div>
+    <div class="notification relative ml-4">
+     <i class="fas fa-bell text-xl cursor-pointer">
+     </i>
+     <div class="badge absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 text-xs">
+      11
+     </div>
+    </div>
+    <i class="fas fa-user-circle text-xl cursor-pointer ml-4">
+    </i>
+   </div>
+  </div>
+  <!-- Sidebar Section -->
+  <div class="sidebar hidden md:block w-64 bg-white border-r border-gray-300 h-screen fixed top-16 overflow-y-auto">
+   <div class="profile flex items-center p-4">
+    <img alt="Profile picture of Brooklyn Alice" class="rounded-full w-10 h-10 mr-4" src="https://placehold.co/40x40"/>
+    <div class="name font-medium">
+     Brooklyn Alice
+    </div>
+   </div>
+   <ul class="menu list-none p-0">
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-tachometer-alt mr-2">
+     </i>
+     Dashboards
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-file-alt mr-2">
+     </i>
+     Pages
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-user mr-2">
+     </i>
+     Account
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-th mr-2">
+     </i>
+     Applications
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-shopping-cart mr-2">
+     </i>
+     Ecommerce
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-users mr-2">
+     </i>
+     Team
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-folder mr-2">
+     </i>
+     Projects
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-lock mr-2">
+     </i>
+     Authentication
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-book mr-2">
+     </i>
+     Basic
+    </li>
+    <li class="p-4 cursor-pointer hover:bg-gray-100 flex items-center">
+     <i class="fas fa-cogs mr-2">
+     </i>
+     Components
+    </li>
+   </ul>
+  </div>
+  <!-- Content Section -->
+  <div class="content flex-1 p-4 mt-16 md:ml-64">
+   <!-- Blog 1 -->
+   <div class="blog-container bg-white border border-gray-300 rounded-md p-4 mb-4">
+    <h2 class="text-2xl font-bold mb-2">
+     Blog Title 1
+    </h2>
+    <div class="blog-images grid grid-cols-1 md:grid-cols-2 gap-4">
+     <img alt="Blog image 1-1" class="big-image col-span-1 md:col-span-2 rounded-md" src="https://placehold.co/600x400"/>
+     <img alt="Blog image 1-2" class="rounded-md" src="https://placehold.co/300x200"/>
+     <img alt="Blog image 1-3" class="rounded-md" src="https://placehold.co/300x200"/>
+     <img alt="Blog image 1-4" class="rounded-md" src="https://placehold.co/300x200"/>
+    </div>
+    <p class="text-gray-600 mt-4">
+     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+   </div>
+   <!-- Blog 2 -->
+   <div class="blog-container bg-white border border-gray-300 rounded-md p-4 mb-4">
+    <h2 class="text-2xl font-bold mb-2">
+     Blog Title 2
+    </h2>
+    <div class="blog-images grid grid-cols-1 md:grid-cols-2 gap-4">
+     <img alt="Blog image 2-1" class="big-image col-span-1 md:col-span-2 rounded-md" src="https://placehold.co/600x400"/>
+     <img alt="Blog image 2-2" class="rounded-md" src="https://placehold.co/300x200"/>
+     <img alt="Blog image 2-3" class="rounded-md" src="https://placehold.co/300x200"/>
+     <img alt="Blog image 2-4" class="rounded-md" src="https://placehold.co/300x200"/>
+    </div>
+    <p class="text-gray-600 mt-4">
+     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+   </div>
+   <!-- Blog 3 -->
+   <div class="blog-container bg-white border border-gray-300 rounded-md p-4 mb-4">
+    <h2 class="text-2xl font-bold mb-2">
+     Blog Title 3
+    </h2>
+    <div class="blog-images grid grid-cols-1 md:grid-cols-2 gap-4">
+     <img alt="Blog image 3-1" class="big-image col-span-1 md:col-span-2 rounded-md" src="https://placehold.co/600x400"/>
+     <img alt="Blog image 3-2" class="rounded-md" src="https://placehold.co/300x200"/>
+     <img alt="Blog image 3-3" class="rounded-md" src="https://placehold.co/300x200"/>
+     <img alt="Blog image 3-4" class="rounded-md" src="https://placehold.co/300x200"/>
+    </div>
+    <p class="text-gray-600 mt-4">
+     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+   </div>
+   <!-- Blog 4 -->
+   <div class="blog-container bg-white border border-gray-300 rounded-md p-4 mb-4">
+    <h2 class="text-2xl font-bold mb-2">
+     Blog Title 4
+    </h2>
+    <div class="blog-images grid grid-cols-1 md:grid-cols-2 gap-4">
+     <img alt="Blog image 4-1" class="big-image col-span-1 md:col-span-2 rounded-md" src="https://placehold.co/600x400"/>
+     <img alt="Blog image 4-2" class="rounded-md" src="https://placehold.co/300x200"/>
+     <img alt="Blog image 4-3" class="rounded-md" src="https://placehold.co/300x200"/>
+     <img alt="Blog image 4-4" class="rounded-md" src="https://placehold.co/300x200"/>
+    </div>
+    <p class="text-gray-600 mt-4">
+     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+   </div>
+  </div>
+ </body>
+</html>

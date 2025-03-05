@@ -1,0 +1,111 @@
+{% extends "firstlabel/main.html" %}
+
+{% block content %} 
+
+<main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+     <h2 class="text-2xl mb-2">
+        
+     </h2>
+<h2>Weaning List</h2>
+<a href="{% url 'Weaning-create' %}" class="btn btn-primary mb-3">Add Weaning</a>
+
+    <form method="get" class="mb-3">
+        <input type="text" 
+               name="q" 
+               value="{{ search_query }}"
+               placeholder="Search names or dates..."
+               class="form-control">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+<table class="table table-striped">
+    <thead>
+        <tr>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          BIRTH DATE
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          DATE WEAN
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          NO WEAN
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          AVG WEIGHT
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          MORTALITY
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          TOTAL LEFT
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          Maturity
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          Age
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          ACTION
+         </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Weaning in Weanings %} 
+        <tr>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+               {{ Weaning.birth_date.date }}
+            </td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.date_wean }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.no_wean }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.avg_weight }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.mortality }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.total_left }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.maturity }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.age_string }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                <a href="{% url 'Weaning-detail' Weaning.pk %}" class="btn btn-sm btn-info">View</a>
+                <a href="{% url 'Weaning-update' Weaning.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'Weaning-delete' Weaning.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No Weaning found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        
+        <li class="page-item active">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+</div>
+</main>
+{% endif %}
+{% endblock %}

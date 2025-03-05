@@ -1,0 +1,24 @@
+{% comment %} {% extends "base.html" %}
+
+{% block content %} {% endcomment %}
+<h2>{% if object %}Edit{% else %}Create{% endif %} Person</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {% if form.name.errors %}
+            <div class="invalid-feedback d-block">{{ form.name.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.birth_date.label_tag }}
+        {{ form.birth_date }}
+        {% if form.birth_date.errors %}
+            <div class="invalid-feedback d-block">{{ form.birth_date.errors }}</div>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'person-list' %}" class="btn btn-outline-secondary">Cancel</a>
+</form>
+{% comment %} {% endblock %} {% endcomment %}

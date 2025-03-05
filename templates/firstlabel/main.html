@@ -1,0 +1,395 @@
+{% load static tailwind_tags %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>
+        {% block title %}MARKETPLACE{% endblock %}
+        {% tailwind_css %}
+    </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const content = document.querySelector('.content');
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('ml-64');
+        }
+
+        function printTable() {
+            const printContents = document.querySelector('.table-container').innerHTML;
+            const originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            window.location.reload();
+        }
+
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('dataTable');
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                const td = tr[i].getElementsByTagName('td');
+                let rowContainsFilter = false;
+
+                // Check each cell in the row
+                for (let j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        const cellValue = td[j].textContent || td[j].innerText;
+                        // If the cell contains the filter text, mark the row as visible
+                        if (cellValue.toLowerCase().includes(filter)) {
+                            rowContainsFilter = true;
+                            break; // No need to check further cells in this row
+                        }
+                    }
+                }
+
+                // Show or hide the row based on the filter
+                tr[i].style.display = rowContainsFilter ? "" : "none";
+            }
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        @media (min-width: 768px) {
+            .navbar .container {
+                max-width: 1200px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-roboto">
+    <!-- Navbar Section -->
+    <header class="navbar fixed top-0 w-full bg-white border-b border-gray-300 z-50">
+        <div class="container mx-auto px-4 flex items-center justify-between h-16">
+            <!-- Left Section - Toggle Button -->
+            <div class="flex items-center">
+                <button class="toggle-btn text-gray-600 hover:text-gray-900" onclick="toggleSidebar()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Center Section - Marketplace Title -->
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+                <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
+                    MARKETPLACE
+                </h1>
+            </div>
+
+            <!-- Right Section - User Menu -->
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="text-gray-600 hover:text-gray-900 transition-colors" onclick="toggleDropdown()">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden transition-opacity">
+                        <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</a>
+                        <a href="{% url 'logout_confirm' %}" class="block px-4 py-2 text-red-600 hover:bg-red-50">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% comment %} <!-- Sidebar Section -->
+    <aside class="sidebar hidden fixed top-20 w-64 bg-white border-r border-gray-300 h-full overflow-y-auto transition-transform duration-300">
+        <ul class="menu list-none p-0 m-0">
+            <li class="p-4 cursor-pointer hover:bg-gray-200 active:bg-gray-300 flex items-center">
+                <i class="fas fa-tachometer-alt mr-2"></i>
+                <a class="text-black no-underline" href="#dashboards">Dashboards</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-piggy-bank mr-2"></i> <!-- Piggy bank for Farrowing -->
+                <a class="text-black no-underline" href="/Farrowing">Farrowing</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-baby mr-2"></i> <!-- Baby icon for Weaning -->
+                <a class="text-black no-underline" href="/Weaning">Weaning</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-book mr-2"></i> <!-- Book for Breeding Record -->
+                <a class="text-black no-underline" href="/Inven">Breeding Record</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-heart mr-2"></i> <!-- Heart for Mating -->
+                <a class="text-black no-underline" href="/Mating">Mating</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-clipboard-list mr-2"></i> <!-- Clipboard for TEST -->
+                <a class="text-black no-underline" href="/testP">TEST</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-th mr-2"></i> <!-- Grid for ALLOCATION -->
+                <a class="text-black no-underline" href="/allocate_L">ALLOCATION</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/Breed">Breed names</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/Sex">Sex</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/TagsColour">TagColour</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="#">TagColour</a>
+            </li>
+        </ul>
+    </aside> {% endcomment %}
+
+    <aside class="sidebar hidden fixed top-20 w-64 bg-white border-r border-gray-300 h-full overflow-y-auto transition-transform duration-300">
+        <ul class="menu list-none p-0 m-0">
+            <li class="p-4 cursor-pointer hover:bg-gray-200 active:bg-gray-300 flex items-center">
+                <i class="fas fa-tachometer-alt mr-2"></i>
+                <a class="text-black no-underline" href="#dashboards">Dashboards</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-piggy-bank mr-2"></i> <!-- Piggy bank for Farrowing -->
+                <a class="text-black no-underline" href="/Farrowing">Farrowing</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-baby mr-2"></i> <!-- Baby icon for Weaning -->
+                <a class="text-black no-underline" href="/Weaning">Weaning</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-book mr-2"></i> <!-- Book for Breeding Record -->
+                <a class="text-black no-underline" href="/Inven">Breeding Record</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-heart mr-2"></i> <!-- Heart for Mating -->
+                <a class="text-black no-underline" href="/Mating">Mating</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-clipboard-list mr-2"></i> <!-- Clipboard for TEST -->
+                <a class="text-black no-underline" href="/testP">TEST</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-th mr-2"></i> <!-- Grid for ALLOCATION -->
+                <a class="text-black no-underline" href="/allocate_L">ALLOCATION</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/Breed">Breed names</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-venus-mars mr-2"></i> <!-- Gender icon for Sex -->
+                <a class="text-black no-underline" href="/Sex">Sex</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-tags mr-2"></i> <!-- Tags for TagColour -->
+                <a class="text-black no-underline" href="/TagsColour">TagColour</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-tags mr-2"></i> <!-- Tags for TagColour -->
+                <a class="text-black no-underline" href="/list">farrow list</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content Section -->
+    <div class="content ml-0 transition-all duration-300">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Floating Print Button -->
+    <button class="fixed bottom-4 left-1/2 transform-translate-x-1/2 bg-green-500 text-white p-2 rounded-md shadow-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105" onclick="printTable()">
+        Print
+    </button>
+</body>
+</html>
+{% comment %} <html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>
+        {% block title %}MARKETPLACE{% endblock %}
+        {% tailwind_css %}
+    </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const content = document.querySelector('.content');
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('ml-64');
+        }
+
+        function printTable() {
+            const printContents = document.querySelector('.table-container').innerHTML;
+            const originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            window.location.reload();
+        }
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('dataTable');
+            const tr = table.getElementsByTagName('tr');
+        
+            for (let i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                const td = tr[i].getElementsByTagName('td');
+                let rowContainsFilter = false;
+        
+                // Check each cell in the row
+                for (let j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        const cellValue = td[j].textContent || td[j].innerText;
+                        // If the cell contains the filter text, mark the row as visible
+                        if (cellValue.toLowerCase().includes(filter)) {
+                            rowContainsFilter = true;
+                            break; // No need to check further cells in this row
+                        }
+                    }
+                }
+        
+                // Show or hide the row based on the filter
+                tr[i].style.display = rowContainsFilter ? "" : "none";
+            }
+        }
+        
+        // Attach the filterTable function to the input event of the search input
+        document.getElementById('searchInput').addEventListener('input', filterTable);
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        @media (min-width: 768px) {
+            .navbar .container {
+                max-width: 1200px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-roboto">
+    <!-- Navbar Section -->
+    <header class="navbar fixed top-0 w-full bg-white border-b border-gray-300 z-50">
+        <div class="container mx-auto px-4 flex items-center justify-between h-16">
+            <!-- Left Section - Toggle Button -->
+            <div class="flex items-center">
+                <button class="toggle-btn text-gray-600 hover:text-gray-900" onclick="toggleSidebar()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Center Section - Marketplace Title -->
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+                <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
+                    MARKETPLACE
+                </h1>
+            </div>
+
+            <!-- Right Section - User Menu -->
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="text-gray-600 hover:text-gray-900 transition-colors" onclick="toggleDropdown()">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden transition-opacity">
+                        <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</a>
+                        <a href="{% url 'logout_confirm' %}" class="block px-4 py-2 text-red-600 hover:bg-red-50">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Section -->
+    <aside class="sidebar hidden fixed top-20 w-64 bg-white border-r border-gray-300 h-full overflow-y-auto transition-transform duration-300">
+        <ul class="menu list-none p-0 m-0">
+            <li class="p-4 cursor-pointer hover:bg-gray-200 active:bg-gray-300 flex items-center">
+                <i class="fas fa-tachometer-alt mr-2"></i>
+                <a class="text-black no-underline" href="#dashboards">Dashboards</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-piggy-bank mr-2"></i> <!-- Piggy bank for Farrowing -->
+                <a class="text-black no-underline" href="/Farrowing">Farrowing</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-baby mr-2"></i> <!-- Baby icon for Weaning -->
+                <a class="text-black no-underline" href="/Weaning">Weaning</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-book mr-2"></i> <!-- Book for Breeding Record -->
+                <a class="text-black no-underline" href="/Inven">Breeding Record</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-heart mr-2"></i> <!-- Heart for Mating -->
+                <a class="text-black no-underline" href="/Mating">Mating</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-clipboard-list mr-2"></i> <!-- Clipboard for TEST -->
+                <a class="text-black no-underline" href="/testP">TEST</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-th mr-2"></i> <!-- Grid for ALLOCATION -->
+                <a class="text-black no-underline" href="/allocate_L">ALLOCATION</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/Breed">Breed names</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/Sex">Sex</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/TagsColour">TagColour</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content Section -->
+    <div class="content ml-0 transition-all duration-300">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Floating Print Button -->
+    <button class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white p-2 rounded-md shadow-lg hover:bg-green-600 transition duration-300 ease-in-out transform-hover:scale-105" onclick="printTable()">
+        Print
+    </button>
+</body>
+
+</html> {% endcomment %}
+

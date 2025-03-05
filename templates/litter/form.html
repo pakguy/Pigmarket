@@ -1,0 +1,134 @@
+{% extends "firstlabel/main.html" %}
+
+{% block content %} 
+    <main class="content ml-0 mt-16 p-4 transition-all duration-300 flex justify-center">
+        <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg w-full max-w-2xl">
+            <h2 class="text-3xl font-semibold mb-6 text-center">{% if object %}Edit{% else %}Create{% endif %} test</h2>
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">{{ form.number.label_tag }}</label>
+                    {{ form.number }}
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            document.querySelector("input[name='number']").classList.add("form-input", "w-full", "border", "border-gray-300", "rounded", "py-2", "px-3");
+                        });
+                    </script>
+                    {% if form.number.errors %}
+                        <div class="text-red-500 text-sm mt-1">{{ form.number.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">{{ form.sex.label_tag }}</label>
+                    {{ form.sex }}
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            document.querySelector("input[name='sex']").classList.add("form-input", "w-full", "border", "border-gray-300", "rounded", "py-2", "px-3");
+                        });
+                    </script>
+                    {% if form.sex.errors %}
+                        <div class="text-red-500 text-sm mt-1">{{ form.sex.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200">Save</button>
+                    <a href="{% url 'Mating-list' %}" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition duration-200">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+{% comment %} 
+<main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+     <h2 class="text-2xl mb-2">
+            <h2 class="text-2xl font-semibold mb-4">{% if object %}Edit{% else %}Create{% endif %} Inven</h2>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">{{ form.number.label_tag }}</label>
+                    {{ form.number }}
+                    {% if form.number.errors %}
+                        <div class="text-red-500 text-sm mt-1">{{ form.number.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">{{ form.sex.label_tag }}</label>
+                    {{ form.sex }}
+                    {% if form.sex.errors %}
+                        <div class="text-red-500 text-sm mt-1">{{ form.sex.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">{{ form.health.label_tag }}</label>
+                    {{ form.health }}
+                    {% if form.health.errors %}
+                        <div class="text-red-500 text-sm mt-1">{{ form.health.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">{{ form.avg_weight.label_tag }}</label>
+                    {{ form.avg_weight }}
+                    {% if form.avg_weight.errors %}
+                        <div class="text-red-500 text-sm mt-1">{{ form.avg_weight.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">{{ form.mortality.label_tag }}</label>
+                    {{ form.mortality }}
+                    {% if form.mortality.errors %}
+                        <div class="text-red-500 text-sm mt-1">{{ form.mortality.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Save</button>
+                    <a href="{% url 'Inven-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Cancel</a>
+                </div>
+            </form>
+
+</div>
+
+</main> {% endcomment %}
+{% comment %} 
+<h2>{% if object %}Edit{% else %}Create{% endif %} Inven</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.number.label_tag }}
+        {{ form.number }}
+        {% if form.number.errors %}
+            <div class="invalid-feedback d-block">{{ form.number.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.sex.label_tag }}
+        {{ form.sex }}
+        {% if form.sex.errors %}
+            <div class="invalid-feedback d-block">{{ form.sex.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.health.label_tag }}
+        {{ form.health }}
+        {% if form.health.errors %}
+            <div class="invalid-feedback d-block">{{ form.health.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.avg_weight.label_tag }}
+        {{ form.avg_weight }}
+        {% if form.avg_weight.errors %}
+            <div class="invalid-feedback d-block">{{ form.avg_weight.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        {{ form.mortality.label_tag }}
+        {{ form.mortality }}
+        {% if form.mortality.errors %}
+            <div class="invalid-feedback d-block">{{ form.mortality.errors }}</div>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'Inven-list' %}" class="btn btn-outline-secondary">Cancel</a>
+</form> {% endcomment %}
+
+{% endblock %}

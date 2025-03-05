@@ -1,0 +1,79 @@
+{% comment %} {% extends "base.html" %}
+
+{% block content %} {% endcomment %}
+<h2>Inven List</h2>
+<a href="{% url 'Inven-create' %}" class="btn btn-primary mb-3">Add Inven</a>
+
+    <form method="get" class="mb-3">
+        <input type="text" 
+               name="q" 
+               value="{{ search_query }}"
+               placeholder="Search names or dates..."
+               class="form-control">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>NUMBER</th>
+            <th>TAG COLOUR</th>
+            <th>BREED</th>
+            <th>SEX</th>
+            <th>WEIGHT</th>
+            <th>STATUS</th>
+            <th>ARRIVAL</th>
+            <th>LOCATION</th>
+            <th>Birth Date</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Inven in Invens %} 
+        <tr>
+            <td>{{ Inven.number }}</td>
+            <td>{{ Inven.tag_colour }}</td>
+            <td>{{ Inven.breed }}</td>
+            <td>{{ Inven.sex }}</td>
+            <td>{{ Inven.weight }}</td>
+            <td>{{ Inven.status }}</td>
+            <td>{{ Inven.arrival }}</td>
+            <td>{{ Inven.location }}</td>
+            <td>{{ Inven.birth_date }}</td>
+            <td>{{ Inven.age_string }}</td>
+            <td>
+                <a href="{% url 'Inven-detail' Inven.pk %}" class="btn btn-sm btn-info">View</a>
+                <a href="{% url 'Inven-update' Inven.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'Inven-delete' Inven.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No Inven found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        
+        <li class="page-item active">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% comment %} {% endblock %} {% endcomment %}

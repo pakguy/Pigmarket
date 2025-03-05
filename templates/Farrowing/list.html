@@ -1,0 +1,189 @@
+{% extends "firstlabel/main.html" %}
+
+{% block content %} 
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-roboto bg-gray-100">
+    <main class="content ml-0 mt-16 p-4 transition-all duration-300">
+        <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+            <h2 class="text-2xl font-bold mb-4">Farrowing List</h2>
+            <a href="{% url 'Farrowing-create' %}" class="btn btn-primary mb-3 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Farrowing</a>
+            
+            <form method="get" class="mb-3 flex flex-col sm:flex-row items-center" onsubmit="event.preventDefault(); filterTable();">
+                <label for="searchInput" class="sr-only">Search</label>
+                <input type="text" 
+                       id="searchInput" 
+                       name="q" 
+                       placeholder="Search names or dates..." 
+                       class="form-control border border-gray-300 rounded py-2 px-4 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">
+                <button type="submit" class="btn btn-primary mt-2 sm:mt-0 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Search</button>
+            </form>  
+            <table id="dataTable" class="table table-striped w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">DATE</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">BOAR ID</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">SOW ID</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">NUMBER BORN</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">MORTALITY</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">WEANING</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">TOTAL LEFT</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Farrowing in Farrowings %} 
+                    <tr>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Farrowing.date }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Farrowing.boar_id.number }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Farrowing.sow_id.number }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Farrowing.number_born }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Farrowing.mortality }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Farrowing.weaning }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Farrowing.total_left }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">
+                            <a href="{% url 'Farrowing-detail' Farrowing.pk %}" class="btn btn-sm btn-info inline-block bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600">View</a>
+                            <a href="{% url 'Farrowing-update' Farrowing.pk %}" class="btn btn-sm btn-warning inline-block bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">Edit</a>
+                            <a href="{% url 'Farrowing-delete' Farrowing.pk %}" class="btn btn-sm btn-danger inline-block bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="p-4 border border-gray-300 text-center">No Farrowing found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination flex justify-center space-x-2">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link inline-block bg-gray-200 text-gray-700 py-1 px-3 rounded hover:bg-gray-300" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+                    
+                    <li class="page-item active">
+                        <span class="page-link inline-block bg-blue-500 text-white py-1 px-3 rounded">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link inline-block bg-gray-200 text-gray-700 py-1 px-3 rounded hover:bg-gray-300" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>
+{% comment %} 
+<main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+     <h2 class="text-2xl mb-2">
+        
+     </h2>
+<h2>Farrowing List</h2>
+<a href="{% url 'Farrowing-create' %}" class="btn btn-primary mb-3">Add Farrowing</a>
+
+    <form method="get" class="mb-3">
+        <input type="text" 
+               name="q" 
+               value="{{ search_query }}"
+               placeholder="Search names or dates..."
+               class="form-control">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+<table class="table table-striped">
+    <thead>
+        <tr>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          DATE
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          BOAR ID
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          SOW ID
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          NUMBER BORN
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          MORTALITY
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          WEANING
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          TOTAL LEFT
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          ACTION
+         </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Farrowing in Farrowings %} 
+        <tr>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+               {{ Farrowing.date }}
+            </td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Farrowing.boar_id.number }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Farrowing.sow_id.number }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Farrowing.number_born }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Farrowing.mortality }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Farrowing.weaning }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Farrowing.total_left }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                <a href="{% url 'Farrowing-detail' Farrowing.pk %}" class="btn btn-sm btn-info">View</a>
+                <a href="{% url 'Farrowing-update' Farrowing.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'Farrowing-delete' Farrowing.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No Farrowing found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        
+        <li class="page-item active">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+</div>
+</main>
+{% endif %} {% endcomment %}
+{% endblock %}

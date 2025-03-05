@@ -1,0 +1,88 @@
+{% extends "firstlabel/main.html" %}
+
+{% block content %}
+
+<main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
+     <h2 class="text-2xl mb-2">
+      Datatable Simple
+     </h2>
+<h2>litter List</h2>
+<a href="{% url 'Litter-create' %}" class="btn btn-primary mb-3">Add litter</a>
+
+    <form method="get" class="mb-3">
+        <input type="text" 
+               name="q" 
+               value="{{ search_query }}"
+               placeholder="Search names or dates..."
+               class="form-control">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+    <table class="table table-hover" class="w-full border-collapse">
+     <thead>
+      <tr>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        NUMBER
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        SEX
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+       <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+        Actions
+        <i class="fas fa-sort ml-1 text-gray-500 cursor-pointer">
+        </i>
+       </th>
+      </tr>
+     </thead>
+     <tbody>
+        {% for litter in Litters %} 
+        <tr>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ litter.number }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+            {{ litter.sex }}
+         </td>
+         <td class="p-4 border border-gray-300 whitespace-nowrap">
+           
+            <a href="{% url 'Litter-detail' litter.pk %}" class="btn btn-sm btn-info">View</a>
+            <a href="{% url 'Litter-update' litter.pk %}" class="btn btn-sm btn-warning">Edit</a>
+            <a href="{% url 'Litter-delete' litter.pk %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No litter found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        
+        <li class="page-item active">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
+</main>
+{% endif %}
+{% endblock %}

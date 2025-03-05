@@ -1,0 +1,344 @@
+{% extends "firstlabel/main.html" %}
+
+{% block content %} 
+{% comment %} 
+<main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto"> {% endcomment %}
+
+                <main class="content ml-0 mt-16 p-4 transition-all duration-300">
+                    <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg overflow-x-auto">
+                        <h2 class="text-2xl mb-2 font-bold">Weaning List</h2>
+                        <a href="{% url 'Weaning-create' %}" class="btn btn-primary mb-3 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Weaning</a>
+                        <form method="get" class="mb-3 flex flex-col sm:flex-row items-center" onsubmit="event.preventDefault(); filterTable();">
+                            <label for="searchInput" class="sr-only">Search</label>
+                            <input type="text" 
+                                   id="searchInput" 
+                                   name="q" 
+                                   placeholder="Search names or dates..." 
+                                   class="form-control border border-gray-300 rounded py-2 px-4 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">
+                            <button type="submit" class="btn btn-primary mt-2 sm:mt-0 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Search</button>
+                        </form>  
+
+                        {% comment %} <form method="get" class="mb-3 flex space-x-2">
+                            <input type="text" name="q" value="{{ search_query }}" placeholder="Search names or dates..." class="form-control border border-gray-300 rounded py-2 px-4 w-full">
+                            <button type="submit" class="btn btn-primary mt-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Search</button>
+                        </form> {% endcomment %}
+                        {% comment %} <div class="overflow-x-auto"> {% endcomment %}
+                            <table id="dataTable" class="table table-striped w-full border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">BIRTH DATE</th>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">DATE WEAN</th>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">NO WEAN</th>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">AVG WEIGHT</th>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">MORTALITY</th>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">TOTAL LEFT</th>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">Maturity</th>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">Age</th>
+                                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for Weaning in Weanings %}
+                                    <tr>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.birth_date.date }}</td>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.date_wean }}</td>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.no_wean }}</td>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.avg_weight }}</td>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.mortality }}</td>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.total_left }}</td>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.maturity }}</td>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.age_string }}</td>
+                                        <td class="p-4 border border-gray-300 whitespace-nowrap">
+                                            <a href="{% url 'Weaning-detail' Weaning.pk %}" class="btn btn-sm btn-info bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600">View</a>
+                                            <a href="{% url 'Weaning-update' Weaning.pk %}" class="btn btn-sm btn-warning bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">Edit</a>
+                                            <a href="{% url 'Weaning-delete' Weaning.pk %}" class="btn btn-sm btn-danger bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="9" class="p-4 border border-gray-300 text-center">No Weaning found</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% comment %} </div> {% endcomment %}
+                        {% if is_paginated %}
+                        <nav aria-label="Page navigation" class="mt-4">
+                            <ul class="pagination flex justify-center space-x-2">
+                                {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link py-2 px-4 border border-gray-300 rounded hover:bg-gray-200" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                </li>
+                                {% endif %}
+                                <li class="page-item active">
+                                    <span class="page-link py-2 px-4 border border-gray-300 rounded bg-gray-200">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                                </li>
+                                {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link py-2 px-4 border border-gray-300 rounded hover:bg-gray-200" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+                    </div>
+                </main>
+{% comment %} 
+    <main class="content ml-0 mt-16 p-4 transition-all duration-300">
+        <div class="overflow-x-auto">
+            <h2 class="text-2xl mb-2 font-bold">Weaning List</h2>
+            <a href="{% url 'Weaning-create' %}" class="btn btn-primary mb-3 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Weaning</a>
+            <form method="get" class="mb-3 flex space-x-2">
+                <input type="text" name="q" value="{{ search_query }}" placeholder="Search names or dates..." class="form-control border border-gray-300 rounded py-2 px-4 w-full">
+                <button type="submit" class="btn btn-primary mt-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Search</button>
+            </form>
+            <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg" class="overflow-x-auto">
+                <table class="table table-striped w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">BIRTH DATE</th>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">DATE WEAN</th>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">NO WEAN</th>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">AVG WEIGHT</th>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">MORTALITY</th>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">TOTAL LEFT</th>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">Maturity</th>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">Age</th>
+                            <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for Weaning in Weanings %}
+                        <tr>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.birth_date.date }}</td>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.date_wean }}</td>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.no_wean }}</td>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.avg_weight }}</td>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.mortality }}</td>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.total_left }}</td>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.maturity }}</td>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.age_string }}</td>
+                            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                                <a href="{% url 'Weaning-detail' Weaning.pk %}" class="btn btn-sm btn-info bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600">View</a>
+                                <a href="{% url 'Weaning-update' Weaning.pk %}" class="btn btn-sm btn-warning bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">Edit</a>
+                                <a href="{% url 'Weaning-delete' Weaning.pk %}" class="btn btn-sm btn-danger bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">Delete</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="p-4 border border-gray-300 text-center">No Weaning found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination flex justify-center space-x-2">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link py-2 px-4 border border-gray-300 rounded hover:bg-gray-200" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+                    <li class="page-item active">
+                        <span class="page-link py-2 px-4 border border-gray-300 rounded bg-gray-200">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link py-2 px-4 border border-gray-300 rounded hover:bg-gray-200" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </main>
+</body> {% endcomment %}
+
+
+    {% comment %} <main class="content ml-0 mt-16 p-4 transition-all duration-300">
+        <div class="table-container bg-white border border-gray-300 rounded-md p-6 overflow-x-auto shadow-lg">
+            <h2 class="text-2xl mb-2">Weaning List</h2>
+            <a href="{% url 'Weaning-create' %}" class="btn btn-primary mb-3 bg-blue-500 text-white px-4 py-2 rounded-md">Add Weaning</a>
+
+            <form method="get" class="mb-3 flex space-x-2">
+                <input type="text" 
+                       name="q" 
+                       value="{{ search_query }}"
+                       placeholder="Search names or dates..."
+                       class="form-control border border-gray-300 rounded-md px-4 py-2 w-full">
+                <button type="submit" class="btn btn-primary mt-2 bg-blue-500 text-white px-4 py-2 rounded-md">Search</button>
+            </form>
+
+            <table class="table-auto w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">BIRTH DATE</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">DATE WEAN</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">NO WEAN</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">AVG WEIGHT</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">MORTALITY</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">TOTAL LEFT</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">Maturity</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">Age</th>
+                        <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Weaning in Weanings %}
+                    <tr>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.birth_date.date }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.date_wean }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.no_wean }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.avg_weight }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.mortality }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.total_left }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.maturity }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">{{ Weaning.age_string }}</td>
+                        <td class="p-4 border border-gray-300 whitespace-nowrap">
+                            <a href="{% url 'Weaning-detail' Weaning.pk %}" class="btn btn-sm btn-info bg-blue-500 text-white px-2 py-1 rounded-md">View</a>
+                            <a href="{% url 'Weaning-update' Weaning.pk %}" class="btn btn-sm btn-warning bg-yellow-500 text-white px-2 py-1 rounded-md">Edit</a>
+                            <a href="{% url 'Weaning-delete' Weaning.pk %}" class="btn btn-sm btn-danger bg-red-500 text-white px-2 py-1 rounded-md">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="p-4 border border-gray-300 text-center">No Weaning found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination flex justify-center space-x-2">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link bg-blue-500 text-white px-4 py-2 rounded-md" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+                    
+                    <li class="page-item active">
+                        <span class="page-link bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link bg-blue-500 text-white px-4 py-2 rounded-md" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </main> {% endcomment %}
+
+{% comment %}     
+  <main class="content ml-0 mt-16 p-4 transition-all duration-300">
+    <div class="table-container bg-white border border-gray-300 rounded-md p-6 overflow-x-auto shadow-lg"> 
+    <h2 class="text-2xl mb-2">
+        
+     </h2>
+<h2>Weaning List</h2>
+<a href="{% url 'Weaning-create' %}" class="btn btn-primary mb-3">Add Weaning</a>
+
+    <form method="get" class="mb-3">
+        <input type="text" 
+               name="q" 
+               value="{{ search_query }}"
+               placeholder="Search names or dates..."
+               class="form-control">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+<table class="table table-striped">
+    <thead>
+        <tr>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          BIRTH DATE
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          DATE WEAN
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          NO WEAN
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          AVG WEIGHT
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          MORTALITY
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          TOTAL LEFT
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          Maturity
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          Age
+         </th>
+         <th class="p-4 border border-gray-300 bg-gray-100 font-medium whitespace-nowrap">
+          ACTION
+         </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Weaning in Weanings %} 
+        <tr>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+               {{ Weaning.birth_date.date }}
+            </td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.date_wean }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.no_wean }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.avg_weight }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.mortality }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.total_left }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.maturity }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                {{ Weaning.age_string }}</td>
+            <td class="p-4 border border-gray-300 whitespace-nowrap">
+                <a href="{% url 'Weaning-detail' Weaning.pk %}" class="btn btn-sm btn-info">View</a>
+                <a href="{% url 'Weaning-update' Weaning.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'Weaning-delete' Weaning.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No Weaning found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        
+        <li class="page-item active">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+</div>
+</main>
+{% endif %} {% endcomment %}
+{% endblock %}

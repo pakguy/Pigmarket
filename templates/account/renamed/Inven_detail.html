@@ -1,0 +1,61 @@
+{% comment %} {% extends "base.html" %}
+
+{% block content %} {% endcomment %}
+<div class="card">
+    <div class="card-header">
+        <h3>{{ Inven.number }}</h3>
+        <h3>{{ Inven.tag_colour }}</h3>
+        <h3>{{ Inven.breed }}</h3>
+        <h3>{{ Inven.sex }}</h3>
+        <h3>{{ Inven.weight }}</h3>
+        <h3>{{ Inven.arrival }}</h3>
+        <h3>{{ Inven.location }}</h3>
+
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">NUMBER</dt>
+            <dd class="col-sm-9">{{ Inven.number }}</dd>
+
+            <dt class="col-sm-3">TAG COLOUR</dt>
+            <dd class="col-sm-9">{{ Inven.tag_colour }}</dd>
+
+            <dt class="col-sm-3">BREED</dt>
+            <dd class="col-sm-9">{{ Inven.breed }}</dd>
+
+            <dt class="col-sm-3">SEX</dt>
+            <dd class="col-sm-9">{{ Inven.sex }}</dd>
+
+            <dt class="col-sm-3">WEIGHT</dt>
+            <dd class="col-sm-9">{{ Inven.weight }}</dd>
+
+            <dt class="col-sm-3">ARRIVAL</dt>
+            <dd class="col-sm-9">{{ Inven.arrival }}</dd>
+
+            <dt class="col-sm-3">STATUS</dt>
+            <dd class="col-sm-9">{{ Inven.status}}</dd>
+
+            <dt class="col-sm-3">LOCATION</dt>
+            <dd class="col-sm-9">{{ Inven.location }}</dd>
+
+            <dt class="col-sm-3">Birth Date</dt>
+            <dd class="col-sm-9">{{ Inven.birth_date }}</dd>
+            
+            <dt class="col-sm-3">Age</dt>
+            <dd class="col-sm-9">
+                {{ age.years }} years, 
+                {{ age.months }} months, 
+                {{ age.days }} days
+            </dd>
+            
+            <dt class="col-sm-3">Created</dt>
+            <dd class="col-sm-9">{{ Inven.created_at|date:"M d, Y H:i" }}</dd>
+        </dl>
+        
+        <div class="mt-4">
+            <a href="{% url 'Inven-update' Inven.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'Inven-list' %}" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+{% comment %} {% endblock %} {% endcomment %}
