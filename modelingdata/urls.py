@@ -4,6 +4,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 from .views import *
 from django.views.generic import TemplateView
+from .views import CustomLoginView  # Import your custom login view
+
 
 urlpatterns = [
 
@@ -27,23 +29,26 @@ urlpatterns = [
 
 
     path('register/', views.register, name='register'),
-    path('/', views.home, name='home'),
+    path('', views.home, name='home'),
     
     # Logout confirmation (GET only)
     path('logout/confirm/', 
          TemplateView.as_view(template_name='account/logout_confirm.html'), 
          name='logout_confirm'),
+         
+    path('logout', views.logout, name='logout'),
     
     # Actual logout endpoint (POST only)
-    path('logout/', 
-         LogoutView.as_view(next_page='login'), 
-         name='logout'),
+#     path('logout/', 
+#          LogoutView.as_view(next_page='login'), 
+#          name='logout'),
     
-    path('login/', LoginView.as_view(
-        template_name='account/login.html',
-        redirect_authenticated_user=True,
-        success_url='home'
-    ), name='login'),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    # path('login/', LoginView.as_view(
+    #     template_name='account/login.html',
+    #     redirect_authenticated_user=True,
+    #     success_url='home'
+    # ), name='login'),
     
     path('profile/', views.profile_view, name='profile'),
 ]

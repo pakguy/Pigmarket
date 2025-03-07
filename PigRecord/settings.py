@@ -42,20 +42,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'tailwind',
-    'tailwindcss',
+    # 'tailwind',
+    # 'tailwindcss',
     'django_browser_reload',
     'modelingdata',
     'inven',
     'rest_framework',
-    'crispy_forms',
-    'crispy_tailwind', 
+    # 'crispy_forms',
+    # 'crispy_tailwind', 
 
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"  # If using Tailwind
 CRISPY_TEMPLATE_PACK = "tailwind"           # If using Tailwind
-LOGIN_REDIRECT_URL = 'profile'  # Where to redirect after login
 LOGOUT_REDIRECT_URL = 'login'   # Fallback if next_page isn't specified
 LOGIN_URL = 'login'             # Where to redirect for login
 

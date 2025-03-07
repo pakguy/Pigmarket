@@ -1,4 +1,29 @@
-{% extends "firstlabel/main.html" %}
+{% extends "comfirm.html" %}
+{% block page %} 
+<main class="content">
+    <div class="table-container">
+        <h2>Details</h2>
+        <dl>
+            <div>
+                <dt>MATING DATE</dt>
+                <dd>{{ Mating.date }}</dd>
+            </div>
+            <div>
+                <dt>BOAR ID</dt>
+                <dd>{{ Mating.boar_id.number }}</dd>
+            </div>
+            <div>
+                <dt>SOW ID</dt>
+                <dd>{{ Mating.sow_id.number }}</dd>
+            </div>
+        <div class="mt-6 flex justify-end space-x-4">
+            <a href="{% url 'Mating-update' Mating.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'Mating-list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% comment %} {% extends "firstlabel/main.html" %}
 {% block content %}
     <main class="content ml-0 mt-16 p-4 transition-all duration-300 flex justify-center">
         <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg w-full max-w-2xl">
@@ -22,7 +47,7 @@
                 <a href="{% url 'Mating-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-200">Back to List</a>
             </div>
         </div>
-    </main>
+    </main> {% endcomment %}
 {% comment %} <main class="content ml-0 mt-16 p-4 transition-all duration-300">
     <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
      <h2 class="text-2xl mb-2">
@@ -69,4 +94,4 @@
     </div>
 
 </main> {% endcomment %}
-{% endblock %} 
+{% comment %} {% endblock %}  {% endcomment %}

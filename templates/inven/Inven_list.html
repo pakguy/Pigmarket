@@ -1,6 +1,64 @@
-{% extends "firstlabel/main.html" %}
-{% block content %}
-    <main class="content ml-0 mt-16 p-4 transition-all duration-300">
+{% extends "list.html" %}
+{% block page %} 
+
+<h2 style="padding-top: 20px;">Breed List</h2>
+<div style="text-align: center; margin-bottom: 16px;">
+    <a href="{% url 'Inven-create' %}" class="btn btn-primary">Add Inven</a>
+</div>
+
+<form method="get" class="mb-3" onsubmit="event.preventDefault(); filterTable();" style="display: flex; flex-direction: column; align-items: center;">
+    <label for="searchInput" class="sr-only">Search</label>
+    <input type="text" 
+           id="searchInput" 
+           name="q" 
+           placeholder="Search names or dates..." 
+           class="form-control">
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+</form>  
+<table id="dataTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>NUMBER</th>
+            <th>TAG COLOUR</th>
+            <th>BREED</th>
+            <th>SEX</th>
+            <th>WEIGHT</th>
+            <th>STATUS</th>
+            <th>ARRIVAL</th>
+            <th>LOCATION</th>
+            <th>Birth Date</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Inven in Invens %} 
+        <tr>
+            <td>{{ Inven.number }}</td>
+            <td>{{ Inven.tag_colour }}</td>
+            <td>{{ Inven.breed }}</td>
+            <td>{{ Inven.sex }}</td>
+            <td>{{ Inven.weight }}</td>
+            <td>{{ Inven.status }}</td>
+            <td>{{ Inven.arrival }}</td>
+            <td>{{ Inven.location }}</td>
+            <td>{{ Inven.birth_date }}</td>
+            <td>{{ Inven.age_string }}</td>
+            <td>
+                <a href="{% url 'Inven-detail' Inven.pk %}" class="btn btn-sm btn-info">View</a>
+                <a href="{% url 'Inven-update' Inven.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'Inven-delete' Inven.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="11" style="text-align: center;">No Inven found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+    {% comment %} <main class="content ml-0 mt-16 p-4 transition-all duration-300">
         <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg overflow-x-auto">
             <h2 class="text-3xl font-semibold mb-6 text-center">Breed List</h2>
             <a href="{% url 'Inven-create' %}" class="btn btn-primary mb-3 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Add Inven</a>
@@ -30,7 +88,7 @@
                        placeholder="Search names or dates..."
                        class="form-control border border-gray-300 rounded py-2 px-4 mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">
                 <button type="submit" class="btn btn-primary mt-2 sm:mt-0 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Search</button>
-            </form> {% endcomment %}
+            </form>
 
             <table id="dataTable" class="table table-striped w-full border-collapse">
                 <thead>
@@ -97,7 +155,7 @@
             </nav>
             {% endif %}
         </div>
-    </main>
+    </main> {% endcomment %}
 {% comment %}     <main class="content ml-0 mt-16 p-4 transition-all duration-300">
         <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg overflow-x-auto">
             <h2 class="text-3xl font-semibold mb-6 text-center">Breed List</h2>
@@ -346,4 +404,3 @@
 </div>
 </main> 
 {% endif %}{% endcomment %}
-{% endblock %}

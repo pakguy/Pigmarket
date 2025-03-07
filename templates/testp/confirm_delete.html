@@ -1,4 +1,9 @@
-{% extends "firstlabel/main.html" %}
+{% extends "comfirm.html" %}
+{% block page %} 
+<a href="{% url 'testP-list' %}" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Cancel</a>
+
+{% endblock %}
+{% comment %} {% extends "firstlabel/main.html" %}
 
 {% block content %}
 
@@ -13,12 +18,12 @@
                 {% csrf_token %}
                 <div class="flex justify-end space-x-4">
                     <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300">Confirm Delete</button>
-                    <a href="{% url 'TestP-list' %}" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Cancel</a>
+                    <a href="{% url 'testP-list' %}" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Cancel</a>
                 </div>
             </form>
         </div>
     </div>
-</main>
+</main> {% endcomment %}
 {% comment %} 
 <main class="content ml-0 mt-16 p-4 transition-all duration-300">
     <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
@@ -38,4 +43,4 @@
     </div>
 </div>
 </main> {% endcomment %}
-{% endblock %}
+{% comment %} {% endblock %} {% endcomment %}

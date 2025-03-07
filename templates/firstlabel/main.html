@@ -1,5 +1,595 @@
-{% load static tailwind_tags %}
 {% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>MARKETPLACE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background-color: white;
+            border-bottom: 1px solid #d1d5db;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #4b5563;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            transition: color 0.3s;
+        }
+        .toggle-btn:hover {
+            color: #1f2937;
+        }
+        .sidebar {
+            background-color: white;
+            border-right: 1px solid #d1d5db;
+            position: fixed;
+            top: 4rem;
+            left: 0;
+            width: 16rem;
+            height: calc(100% - 4rem);
+            overflow-y: auto;
+            transition: transform 0.3s;
+            padding-top: 1rem;
+        }
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu li {
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        .menu li:hover {
+            background-color: #e5e7eb;
+        }
+        .menu li a {
+            text-decoration: none;
+            color: black;
+            margin-left: 0.5rem;
+            font-weight: 500;
+        }
+        .menu li i {
+            color: #4b5563;
+            font-size: 1.25rem;
+        }
+        .content {
+            margin-left: 0;
+            transition: margin-left 0.3s;
+            padding: 1rem;
+            padding-top: 5rem;
+        }
+        .content.ml-64 {
+            margin-left: 16rem;
+        }
+        .user-menu {
+            position: relative;
+        }
+        .user-menu button {
+            cursor: pointer;
+            color: #4b5563;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+        }
+        .user-menu button:hover {
+            color: #1f2937;
+        }
+        .user-menu .dropdown {
+            position: absolute;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 12rem;
+            background-color: white;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .user-menu .dropdown a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #4b5563;
+            text-decoration: none;
+        }
+        .user-menu .dropdown a:hover {
+            background-color: #f3f4f6;
+        }
+        .user-menu .dropdown a.text-red-600:hover {
+            background-color: #fef2f2;
+        }
+        .user-menu .dropdown.hidden {
+            display: none;
+        }
+        .user-menu .dropdown:not(.hidden) {
+            display: block;
+        }
+        .print-btn {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #48bb78;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .print-btn:hover {
+            background-color: #38a169;
+            transform: scale(1.05);
+        }
+    </style>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const content = document.querySelector('.content');
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('ml-64');
+        }
+
+        function printTable() {
+            const printContents = document.querySelector('.table-container').innerHTML;
+            const originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            window.location.reload();
+        }
+
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('dataTable');
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                const td = tr[i].getElementsByTagName('td');
+                let rowContainsFilter = false;
+
+                // Check each cell in the row
+                for (let j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        const cellValue = td[j].textContent || td[j].innerText;
+                        // If the cell contains the filter text, mark the row as visible
+                        if (cellValue.toLowerCase().includes(filter)) {
+                            rowContainsFilter = true;
+                            break; // No need to check further cells in this row
+                        }
+                    }
+                }
+
+                // Show or hide the row based on the filter
+                tr[i].style.display = rowContainsFilter ? "" : "none";
+            }
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <header class="navbar">
+        <div class="container">
+            <!-- Left Section - Toggle Button -->
+            <div class="flex items-center">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Center Section - Marketplace Title -->
+            <div class="center-section" style="position: absolute; left: 50%; transform: translateX(-50%);">
+                <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
+                    MARKETPLACE
+                </h1>
+            </div>
+
+            <!-- Right Section - User Menu -->
+            <div class="user-menu">
+                <button onclick="toggleDropdown()">
+                    <i class="fas fa-user-circle" style="font-size: 2rem; color: #4b5563; padding-right: 1rem;"></i>
+                </button>
+                
+                <!-- Dropdown Menu -->
+                <div id="userDropdown" class="dropdown hidden">
+                    <a href="#">Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="#" class="text-red-600">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <aside class="sidebar hidden">
+        <ul class="menu">
+            <li>
+                <i class="fas fa-tachometer-alt"></i>
+                <a href="/">Dashboards</a>
+            </li>
+            <li>
+                <i class="fas fa-piggy-bank"></i>
+                <a href="/Farrowing">Farrowing</a>
+            </li>
+            <li>
+                <i class="fas fa-baby"></i>
+                <a href="/Weaning">Weaning</a>
+            </li>
+            <li>
+                <i class="fas fa-book"></i>
+                <a href="/Inven">Breeding Record</a>
+            </li>
+            <li>
+                <i class="fas fa-heart"></i>
+                <a href="/Mating">Mating</a>
+            </li>
+            <li>
+                <i class="fas fa-clipboard-list"></i>
+                <a href="/testP">TEST</a>
+            </li>
+            <li>
+                <i class="fas fa-th"></i>
+                <a href="/allocate_L">ALLOCATION</a>
+            </li>
+            <li>
+                <i class="fas fa-paw"></i>
+                <a href="/Breed">Breed names</a>
+            </li>
+            <li>
+                <i class="fas fa-venus-mars"></i>
+                <a href="/Sex">Sex</a>
+            </li>
+            <li>
+                <i class="fas fa-tags"></i>
+                <a href="/TagsColour">TagColour</a>
+            </li>
+            <li>
+                <i class="fas fa-tags"></i>
+                <a href="/list">farrow list</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content Section -->
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+        <!-- Content goes here -->
+    </div>
+
+    <!-- Floating Print Button -->
+    <button class="print-btn" onclick="printTable()">
+        Print
+    </button>
+</body>
+</html>
+
+{% comment %} {% load static tailwind_tags %}  {% endcomment %}
+
+{% comment %} <html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>
+        {% block title %}MARKETPLACE{% endblock %}
+    </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background-color: white;
+            border-bottom: 1px solid #d1d5db;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #4b5563;
+        }
+        .toggle-btn:hover {
+            color: #1f2937;
+        }
+        .sidebar {
+            background-color: white;
+            border-right: 1px solid #d1d5db;
+            position: fixed;
+            top: 4rem;
+            left: 0;
+            width: 16rem;
+            height: calc(100% - 4rem);
+            overflow-y: auto;
+            transition: transform 0.3s;
+        }
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu li {
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .menu li:hover {
+            background-color: #e5e7eb;
+        }
+        .menu li a {
+            text-decoration: none;
+            color: black;
+            margin-left: 0.5rem;
+        }
+        .content {
+            margin-left: 0;
+            transition: margin-left 0.3s;
+            padding: 1rem;
+            padding-top: 5rem;
+        }
+        .content.ml-64 {
+            margin-left: 16rem;
+        }
+        .user-menu {
+            position: relative;
+        }
+        .user-menu button {
+            cursor: pointer;
+            color: #4b5563;
+        }
+        .user-menu button:hover {
+            color: #1f2937;
+        }
+        .user-menu .dropdown {
+            position: absolute;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 12rem;
+            background-color: white;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .user-menu .dropdown a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #4b5563;
+            text-decoration: none;
+        }
+        .user-menu .dropdown a:hover {
+            background-color: #f3f4f6;
+        }
+        .user-menu .dropdown a.text-red-600:hover {
+            background-color: #fef2f2;
+        }
+        .user-menu .dropdown.hidden {
+            display: none;
+        }
+        .user-menu .dropdown:not(.hidden) {
+            display: block;
+        }
+        .print-btn {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #48bb78;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .print-btn:hover {
+            background-color: #38a169;
+            transform: scale(1.05);
+        }
+    </style>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const content = document.querySelector('.content');
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('ml-64');
+        }
+
+        function printTable() {
+            const printContents = document.querySelector('.table-container').innerHTML;
+            const originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            window.location.reload();
+        }
+
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('dataTable');
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                const td = tr[i].getElementsByTagName('td');
+                let rowContainsFilter = false;
+
+                // Check each cell in the row
+                for (let j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        const cellValue = td[j].textContent || td[j].innerText;
+                        // If the cell contains the filter text, mark the row as visible
+                        if (cellValue.toLowerCase().includes(filter)) {
+                            rowContainsFilter = true;
+                            break; // No need to check further cells in this row
+                        }
+                    }
+                }
+
+                // Show or hide the row based on the filter
+                tr[i].style.display = rowContainsFilter ? "" : "none";
+            }
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <header class="navbar">
+        <div class="container">
+            <!-- Left Section - Toggle Button -->
+            <div class="flex items-center">
+                <button class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Center Section - Marketplace Title -->
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+                <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
+                    MARKETPLACE
+                </h1>
+            </div>
+
+            <!-- Right Section - User Menu -->
+            <div class="user-menu">
+                <button onclick="toggleDropdown()">
+                    <i class="fas fa-user-circle text-2xl"></i>
+                </button>
+                
+                <!-- Dropdown Menu -->
+                <div id="userDropdown" class="dropdown hidden">
+                    <a href="{% url 'profile' %}">Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="{% url 'logout_confirm' %}" class="text-red-600">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <aside class="sidebar hidden">
+        <ul class="menu">
+            <li>
+                <i class="fas fa-tachometer-alt"></i>
+                <a href="#dashboards">Dashboards</a>
+            </li>
+            <li>
+                <i class="fas fa-piggy-bank"></i> <!-- Piggy bank for Farrowing -->
+                <a href="/Farrowing">Farrowing</a>
+            </li>
+            <li>
+                <i class="fas fa-baby"></i> <!-- Baby icon for Weaning -->
+                <a href="/Weaning">Weaning</a>
+            </li>
+            <li>
+                <i class="fas fa-book"></i> <!-- Book for Breeding Record -->
+                <a href="/Inven">Breeding Record</a>
+            </li>
+            <li>
+                <i class="fas fa-heart"></i> <!-- Heart for Mating -->
+                <a href="/Mating">Mating</a>
+            </li>
+            <li>
+                <i class="fas fa-clipboard-list"></i> <!-- Clipboard for TEST -->
+                <a href="/testP">TEST</a>
+            </li>
+            <li>
+                <i class="fas fa-th"></i> <!-- Grid for ALLOCATION -->
+                <a href="/allocate_L">ALLOCATION</a>
+            </li>
+            <li>
+                <i class="fas fa-paw"></i> <!-- Paw for LITTER -->
+                <a href="/Breed">Breed names</a>
+            </li>
+            <li>
+                <i class="fas fa-venus-mars"></i> <!-- Gender icon for Sex -->
+                <a href="/Sex">Sex</a>
+            </li>
+            <li>
+                <i class="fas fa-tags"></i> <!-- Tags for TagColour -->
+                <a href="/TagsColour">TagColour</a>
+            </li>
+            <li>
+                <i class="fas fa-tags"></i> <!-- Tags for TagColour -->
+                <a href="/list">farrow list</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content Section -->
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Floating Print Button -->
+    <button class="print-btn" onclick="printTable()">
+        Print
+    </button>
+</body>
+</html> {% endcomment %}
+{% comment %}
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -110,56 +700,6 @@
         </div>
     </header>
 
-    {% comment %} <!-- Sidebar Section -->
-    <aside class="sidebar hidden fixed top-20 w-64 bg-white border-r border-gray-300 h-full overflow-y-auto transition-transform duration-300">
-        <ul class="menu list-none p-0 m-0">
-            <li class="p-4 cursor-pointer hover:bg-gray-200 active:bg-gray-300 flex items-center">
-                <i class="fas fa-tachometer-alt mr-2"></i>
-                <a class="text-black no-underline" href="#dashboards">Dashboards</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-piggy-bank mr-2"></i> <!-- Piggy bank for Farrowing -->
-                <a class="text-black no-underline" href="/Farrowing">Farrowing</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-baby mr-2"></i> <!-- Baby icon for Weaning -->
-                <a class="text-black no-underline" href="/Weaning">Weaning</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-book mr-2"></i> <!-- Book for Breeding Record -->
-                <a class="text-black no-underline" href="/Inven">Breeding Record</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-heart mr-2"></i> <!-- Heart for Mating -->
-                <a class="text-black no-underline" href="/Mating">Mating</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-clipboard-list mr-2"></i> <!-- Clipboard for TEST -->
-                <a class="text-black no-underline" href="/testP">TEST</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-th mr-2"></i> <!-- Grid for ALLOCATION -->
-                <a class="text-black no-underline" href="/allocate_L">ALLOCATION</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
-                <a class="text-black no-underline" href="/Breed">Breed names</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
-                <a class="text-black no-underline" href="/Sex">Sex</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
-                <a class="text-black no-underline" href="/TagsColour">TagColour</a>
-            </li>
-            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
-                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
-                <a class="text-black no-underline" href="#">TagColour</a>
-            </li>
-        </ul>
-    </aside> {% endcomment %}
-
     <aside class="sidebar hidden fixed top-20 w-64 bg-white border-r border-gray-300 h-full overflow-y-auto transition-transform duration-300">
         <ul class="menu list-none p-0 m-0">
             <li class="p-4 cursor-pointer hover:bg-gray-200 active:bg-gray-300 flex items-center">
@@ -220,7 +760,57 @@
         Print
     </button>
 </body>
-</html>
+</html> {% endcomment %}
+    {% comment %} <!-- Sidebar Section -->
+    <aside class="sidebar hidden fixed top-20 w-64 bg-white border-r border-gray-300 h-full overflow-y-auto transition-transform duration-300">
+        <ul class="menu list-none p-0 m-0">
+            <li class="p-4 cursor-pointer hover:bg-gray-200 active:bg-gray-300 flex items-center">
+                <i class="fas fa-tachometer-alt mr-2"></i>
+                <a class="text-black no-underline" href="#dashboards">Dashboards</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-piggy-bank mr-2"></i> <!-- Piggy bank for Farrowing -->
+                <a class="text-black no-underline" href="/Farrowing">Farrowing</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-baby mr-2"></i> <!-- Baby icon for Weaning -->
+                <a class="text-black no-underline" href="/Weaning">Weaning</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-book mr-2"></i> <!-- Book for Breeding Record -->
+                <a class="text-black no-underline" href="/Inven">Breeding Record</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-heart mr-2"></i> <!-- Heart for Mating -->
+                <a class="text-black no-underline" href="/Mating">Mating</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-clipboard-list mr-2"></i> <!-- Clipboard for TEST -->
+                <a class="text-black no-underline" href="/testP">TEST</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-th mr-2"></i> <!-- Grid for ALLOCATION -->
+                <a class="text-black no-underline" href="/allocate_L">ALLOCATION</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/Breed">Breed names</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/Sex">Sex</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="/TagsColour">TagColour</a>
+            </li>
+            <li class="p-4 cursor-pointer hover:bg-gray-200 flex items-center">
+                <i class="fas fa-paw mr-2"></i> <!-- Paw for LITTER -->
+                <a class="text-black no-underline" href="#">TagColour</a>
+            </li>
+        </ul>
+    </aside> {% endcomment %}
+
 {% comment %} <html lang="en">
 <head>
     <meta charset="utf-8"/>

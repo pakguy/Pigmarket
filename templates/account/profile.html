@@ -1,5 +1,245 @@
 
-{% load crispy_forms_tags %}
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .container h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #2d3748;
+        }
+        .container p {
+            font-size: 1.125rem;
+            color: #4a5568;
+        }
+        .container .font-semibold {
+            font-weight: 600;
+        }
+        .btn {
+            width: 100%;
+            background-color: #f56565;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            border: none;
+            margin-bottom: 1rem;
+            display: block;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #e53e3e;
+        }
+        .btn-home {
+            background-color: #4299e1;
+        }
+        .btn-home:hover {
+            background-color: #3182ce;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Profile</h2>
+        <div class="space-y-4">
+            <p><span class="font-semibold">Username:</span> {{ user.username }}</p>
+            <p><span class="font-semibold">Email:</span> {{ user.email }}</p>
+        </div>
+        
+        <!-- Logout Link -->
+        <a href="{% url 'logout_confirm' %}" class="btn btn-logout">
+            Logout
+        </a>
+        
+        <!-- Button to redirect to home page -->
+        <a href="{% url 'home' %}" class="btn btn-home">
+            Home
+        </a>
+    </div>
+</body>
+</html>
+{% comment %} <html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .container h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #2d3748;
+        }
+        .container p {
+            font-size: 1.125rem;
+            color: #4a5568;
+        }
+        .container .font-semibold {
+            font-weight: 600;
+        }
+        .btn {
+            width: 100%;
+            background-color: #f56565;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            border: none;
+            margin-bottom: 1rem;
+        }
+        .btn:hover {
+            background-color: #e53e3e;
+        }
+        .btn-home {
+            background-color: #4299e1;
+        }
+        .btn-home:hover {
+            background-color: #3182ce;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Profile</h2>
+        <div class="space-y-4">
+            <p><span class="font-semibold">Username:</span> {{ user.username }}</p>
+            <p><span class="font-semibold">Email:</span> {{ user.email }}</p>
+        </div>
+        
+        <!-- Corrected Logout Form -->
+        <form action="{% url 'logout_confirm' %}" method="post" class="mt-6">
+            {% csrf_token %}
+            <button type="submit" class="btn">
+                Logout
+            </button>
+        </form>
+        
+        <!-- Button to redirect to home page -->
+        <a href="{% url 'home' %}" class="btn btn-home">
+            Home
+        </a>
+    </div>
+</body>
+</html> {% endcomment %}
+{% comment %} <html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .container h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #2d3748;
+        }
+        .container p {
+            font-size: 1.125rem;
+            color: #4a5568;
+        }
+        .container .font-semibold {
+            font-weight: 600;
+        }
+        .btn {
+            width: 100%;
+            background-color: #f56565;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            border: none;
+        }
+        .btn:hover {
+            background-color: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Profile</h2>
+        <div class="space-y-4">
+            <p><span class="font-semibold">Username:</span> {{ user.username }}</p>
+            <p><span class="font-semibold">Email:</span> {{ user.email }}</p>
+        </div>
+        
+        <!-- Corrected Logout Form -->
+        <form action="{% url 'logout_confirm' %}"  class="mt-6">
+            {% csrf_token %}
+            <button type="submit" class="btn">
+                Logout
+            </button>
+        </form>
+    </div>
+</body>
+</html> {% endcomment %}
+
+{% comment %} {% load crispy_forms_tags %}
 <html>
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +268,7 @@
         </form>
     </div>
 </body>
-</html>
+</html> {% endcomment %}
 {% comment %} 
 <html>
 <head>

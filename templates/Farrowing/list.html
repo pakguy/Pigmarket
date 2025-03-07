@@ -1,7 +1,248 @@
-{% extends "firstlabel/main.html" %}
+{% extends "list.html" %}
+{% block page %} 
 
-{% block content %} 
-<html>
+                <h2>Farrowing List</h2>
+                <div style="text-align: center; margin-bottom: 16px;">
+<a href="{% url 'Farrowing-create' %}" class="btn btn-primary">Add Farrowing</a>
+</div>
+
+<form method="get" class="mb-3" onsubmit="event.preventDefault(); filterTable();" style="display: flex; flex-direction: column; align-items: center;">
+    <label for="searchInput" class="sr-only">Search</label>
+    <input type="text" 
+           id="searchInput" 
+           name="q" 
+           placeholder="Search names or dates..." 
+           class="form-control">
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+</form>  
+<table id="dataTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>DATE</th>
+            <th>BOAR ID</th>
+            <th>SOW ID</th>
+            <th>NUMBER BORN</th>
+            <th>MORTALITY</th>
+            <th>WEANING</th>
+            <th>TOTAL LEFT</th>
+            <th>ACTION</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Farrowing in Farrowings %} 
+        <tr>
+            <td>{{ Farrowing.date }}</td>
+            <td>{{ Farrowing.boar_id.number }}</td>
+            <td>{{ Farrowing.sow_id.number }}</td>
+            <td>{{ Farrowing.number_born }}</td>
+            <td>{{ Farrowing.mortality }}</td>
+            <td>{{ Farrowing.weaning }}</td>
+            <td>{{ Farrowing.total_left }}</td>
+            <td>
+                <a href="{% url 'Farrowing-detail' Farrowing.pk %}" class="btn btn-sm btn-info">View</a>
+                <a href="{% url 'Farrowing-update' Farrowing.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'Farrowing-delete' Farrowing.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8" style="text-align: center;">No Farrowing found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
+{% comment %} <html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            margin-left: 0;
+            margin-top: 16px;
+            padding: 16px;
+            transition: all 0.3s;
+        }
+        .table-container {
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+        }
+        .table-container h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+        .form-control {
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 8px 16px;
+            width: 100%;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            white-space: nowrap;
+        }
+        .table th {
+            background-color: #f3f4f6;
+            font-weight: 500;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+        .pagination li {
+            margin: 0 4px;
+        }
+        .page-link {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .page-link:hover {
+            background-color: #e5e7eb;
+        }
+        .page-item.active .page-link {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+        .btn-sm {
+            padding: 4px 8px;
+        }
+        .btn-info {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+        .btn-info:hover {
+            background-color: #2563eb;
+        }
+        .btn-warning {
+            background-color: #f59e0b;
+            color: #ffffff;
+        }
+        .btn-warning:hover {
+            background-color: #d97706;
+        }
+        .btn-danger {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+    </style>
+</head>
+<body>
+    <main class="content">
+        <div class="table-container">
+            <h2>Farrowing List</h2>
+            <a href="{% url 'Farrowing-create' %}" class="btn btn-primary mb-3">Add Farrowing</a>
+            
+            <form method="get" class="mb-3" onsubmit="event.preventDefault(); filterTable();" style="display: flex; flex-direction: column; align-items: center;">
+                <label for="searchInput" class="sr-only">Search</label>
+                <input type="text" 
+                       id="searchInput" 
+                       name="q" 
+                       placeholder="Search names or dates..." 
+                       class="form-control mb-2" style="margin-bottom: 8px;">
+                <button type="submit" class="btn btn-primary mt-2">Search</button>
+            </form>  
+            <table id="dataTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>BOAR ID</th>
+                        <th>SOW ID</th>
+                        <th>NUMBER BORN</th>
+                        <th>MORTALITY</th>
+                        <th>WEANING</th>
+                        <th>TOTAL LEFT</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Farrowing in Farrowings %} 
+                    <tr>
+                        <td>{{ Farrowing.date }}</td>
+                        <td>{{ Farrowing.boar_id.number }}</td>
+                        <td>{{ Farrowing.sow_id.number }}</td>
+                        <td>{{ Farrowing.number_born }}</td>
+                        <td>{{ Farrowing.mortality }}</td>
+                        <td>{{ Farrowing.weaning }}</td>
+                        <td>{{ Farrowing.total_left }}</td>
+                        <td>
+                            <a href="{% url 'Farrowing-detail' Farrowing.pk %}" class="btn btn-sm btn-info">View</a>
+                            <a href="{% url 'Farrowing-update' Farrowing.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'Farrowing-delete' Farrowing.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" style="text-align: center;">No Farrowing found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if is_paginated %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+                    
+                    <li class="page-item active">
+                        <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html> {% endcomment %}
+{% comment %} <html>
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
@@ -83,7 +324,7 @@
         </div>
     </main>
 </body>
-</html>
+</html> {% endcomment %}
 {% comment %} 
 <main class="content ml-0 mt-16 p-4 transition-all duration-300">
     <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
@@ -186,4 +427,3 @@
 </div>
 </main>
 {% endif %} {% endcomment %}
-{% endblock %}

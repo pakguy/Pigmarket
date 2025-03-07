@@ -1,5 +1,161 @@
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 28rem;
+            text-align: center;
+        }
+        .container h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .btn-logout {
+            background-color: #ef4444;
+        }
+        .btn-logout:hover {
+            background-color: #dc2626;
+        }
+        .btn-cancel {
+            background-color: #3b82f6;
+        }
+        .btn-cancel:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Logout</h2>
+        <p>Are you sure you want to sign out?</p>
+        <div class="btn-container">
+            <a href="{% url 'logout' %}" class="btn btn-logout">
+                Yes, Logout
+            </a>
+            <a href="{% url 'home' %}" class="btn btn-cancel">
+                Cancel
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+{% comment %} <html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .container h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #2d3748;
+        }
+        .container p {
+            font-size: 1.125rem;
+            color: #718096;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-logout {
+            background-color: #f56565;
+            color: white;
+        }
+        .btn-logout:hover {
+            background-color: #e53e3e;
+        }
+        .btn-cancel {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+        .btn-cancel:hover {
+            background-color: #cbd5e0;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Logout</h2>
+        <form method="get" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <p>Are you sure you want to sign out?</p>
+            <div class="btn-container">
+                <button type="submit" class="btn btn-logout">
+                    Yes, Logout
+                </button>
+                <a href="{% url 'home' %}" class="btn btn-cancel">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html> {% endcomment %}
+{% comment %} <html>
+<head>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -26,7 +182,7 @@
         </form>
     </div>
 </body>
-</html>
+</html> {% endcomment %}
 <!-- account/logout_confirm.html -->
  
 {% comment %} <div class="min-h-screen bg-gray-100 flex items-center justify-center">

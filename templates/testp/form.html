@@ -1,4 +1,41 @@
-{% extends "firstlabel/main.html" %}
+{% extends "form.html" %}
+{% block page %} 
+<main class="content">
+    <div class="table-container">
+        <h2>{% if object %}Edit{% else %}Create{% endif %} TESTP</h2>
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div class="form-control">
+                <label>{{ form.date.label_tag }}</label>
+                {{ form.date }}
+                {% if form.date.errors %}
+                    <div class="error">{{ form.date.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-control">
+                <label>{{ form.status.label_tag }}</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <div class="error">{{ form.status.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-control">
+                <label>{{ form.health.label_tag }}</label>
+                {{ form.health }}
+                {% if form.health.errors %}
+                    <div class="error">{{ form.health.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{% url 'testP-list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
+{% comment %} {% extends "firstlabel/main.html" %}
 
 {% block content %} 
     <main class="content ml-0 mt-16 p-4 transition-all duration-300 flex justify-center">
@@ -44,11 +81,11 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200">Save</button>
-                    <a href="{% url 'Mating-list' %}" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition duration-200">Cancel</a>
+                    <a href="{% url 'TestP-list' %}" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition duration-200">Cancel</a>
                 </div>
             </form>
         </div>
-    </main>
+    </main> {% endcomment %}
 {% comment %} 
 <main class="content ml-0 mt-16 p-4 transition-all duration-300">
     <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
@@ -143,4 +180,4 @@
     <a href="{% url 'Inven-list' %}" class="btn btn-outline-secondary">Cancel</a>
 </form> {% endcomment %}
 
-{% endblock %}
+{% comment %} {% endblock %} {% endcomment %}

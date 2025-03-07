@@ -1,3 +1,63 @@
+
+{% extends "comfirm.html" %}
+{% block page %} 
+<main class="content">
+    <div class="table-container">
+        <h2>Details</h2>
+        <dl>
+            <div>
+                <dt>TAG ID</dt>
+                <dd>{{ Inven.number }}</dd>
+            </div>
+            <div>
+                <dt>TAG COLOUR</dt>
+                <dd>{{ Inven.tag_colour }}</dd>
+            </div>
+            <div>
+                <dt>BREED</dt>
+                <dd>{{ Inven.breed }}</dd>
+            </div>
+            <div>
+                <dt>SEX</dt>
+                <dd>{{ Inven.sex }}</dd>
+            </div>
+            <div>
+                <dt>WEIGHT</dt>
+                <dd>{{ Inven.weight }}</dd>
+            </div>
+            <div>
+                <dt>ARRIVAL</dt>
+                <dd>{{ Inven.arrival }}</dd>
+            </div>
+            <div>
+                <dt>LOCATION</dt>
+                <dd>{{ Inven.location }}</dd>
+            </div>
+            <div>
+                <dt>ARRIVAL</dt>
+                <dd>{{ Inven.arrival }}</dd>
+            </div>
+            <div>
+                <dt>BIRTH DATE</dt>
+                <dd>{{ Inven.birth_date }}</dd>
+            </div>
+            <div>
+                <dt>AGE</dt>
+                <dd>
+                    {{ age.years }} years, 
+                    {{ age.months }} months, and 
+                    {{ age.days }} days</dd>
+            </div>
+        </dl>
+        <div class="mt-6 flex justify-end space-x-4">
+            <a href="{% url 'Inven-update' Inven.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'Inven-list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% comment %} 
+
 {% extends "firstlabel/main.html" %}
 
 {% block content %}
@@ -51,7 +111,7 @@
                 </div>
     </div>
 
-</main>
+</main> {% endcomment %}
         {% comment %} <h2 class="text-2xl mb-2">
         
 <div class="card">
@@ -111,4 +171,4 @@
         </div>
     </div>
 </div> {% endcomment %}
-{% endblock %}
+{% comment %} {% endblock %} {% endcomment %}

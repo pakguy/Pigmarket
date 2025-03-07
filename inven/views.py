@@ -117,7 +117,7 @@ class TestPCreateView(CreateView):
     model = TestP
     form_class = testPForm
     template_name = 'testp/form.html'
-    success_url = reverse_lazy('TestP-list')
+    success_url = reverse_lazy('testP-list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -142,12 +142,12 @@ class TestPUpdateView(UpdateView):
     model = TestP
     form_class = testPForm
     template_name = 'testp/form.html'
-    success_url = reverse_lazy('TestP-list')
+    success_url = reverse_lazy('testP-list')
 
 class TestPDeleteView(DeleteView):
     model = TestP
     template_name = 'testp/confirm_delete.html'
-    success_url = reverse_lazy('TestP-list')
+    success_url = reverse_lazy('testP-list')
 
 
 
@@ -244,7 +244,7 @@ class LitterUpdateView(UpdateView):
 
 class LitterDeleteView(DeleteView):
     model = Litter
-    template_name = 'Litter/confirm_delete.html'
+    template_name = 'litter/confirm_delete.html'
     success_url = reverse_lazy('Litter-list')
 # 
 

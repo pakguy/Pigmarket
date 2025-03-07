@@ -1,4 +1,30 @@
-{% extends "firstlabel/main.html" %}
+{% extends "detail.html" %}
+{% block page %} 
+<main class="content">
+    <div class="table-container">
+        <h2>Details</h2>
+        <dl>
+            <div>
+                <dt>TestP DATE</dt>
+                <dd>{{ TestP.date.date }}</dd>
+            </div>
+            <div>
+                <dt>STATUS</dt>
+                <dd>{{ TestP.status }}</dd>
+            </div>
+            <div>
+                <dt>HEALTH</dt>
+                <dd>{{ TestP.health }}</dd>
+            </div>
+        <div class="mt-6 flex justify-end space-x-4">
+            <a href="{% url 'testP-update' TestP.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'testP-list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% comment %} {% extends "firstlabel/main.html" %}
 {% block content %}
     <main class="content ml-0 mt-16 p-4 transition-all duration-300 flex justify-center">
         <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg w-full max-w-2xl">
@@ -22,7 +48,7 @@
                 <a href="{% url 'testP-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-200">Back to List</a>
             </div>
         </div>
-    </main>
+    </main> {% endcomment %}
 {% comment %} <main class="content ml-0 mt-16 p-4 transition-all duration-300">
     <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
      <h2 class="text-2xl mb-2">
@@ -69,4 +95,4 @@
     </div>
 
 </main> {% endcomment %}
-{% endblock %} 
+{% comment %} {% endblock %}  {% endcomment %}

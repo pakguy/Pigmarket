@@ -1,4 +1,47 @@
-{% extends "firstlabel/main.html" %}
+
+{% extends "detail.html" %}
+{% block page %} 
+<main class="content">
+    <div class="table-container">
+        <h2>Details</h2>
+        <dl>
+            <div>
+                <dt>DATE FARROWED</dt>
+                <dd>{{ Weaning.birth_date.date }}</dd>
+            </div>
+            <div>
+                <dt>DATE WEAN</dt>
+                <dd>{{ Weaning.date_wean }}</dd>
+            </div>
+            <div>
+                <dt>NO WEAN</dt>
+                <dd>{{ Weaning.no_wean }}</dd>
+            </div>
+            <div>
+                <dt>AVERAGE WEIGHT</dt>
+                <dd>{{ Weaning.avg_weight }} kg</dd>
+            </div>
+            <div>
+                <dt>MORTALITY</dt>
+                <dd>{{ Weaning.mortality }}</dd>
+            </div>
+            <div>
+                <dt>LITTER AGE</dt>
+                <dd>{{ Weaning.age_string }}</dd>
+            </div>
+            <div>
+                <dt>MATURITY</dt>
+                <dd>{{ Weaning.maturity }}</dd>
+            </div>
+        <div class="mt-6 flex justify-end space-x-4">
+            <a href="{% url 'Weaning-update' Weaning.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'Weaning-list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% comment %}  {% endcomment %}
+{% comment %} {% extends "firstlabel/main.html" %}
 {% block content %}
     <main class="content ml-0 mt-16 p-4 transition-all duration-300 flex justify-center">
         <div class="table-container bg-white border border-gray-300 rounded-md p-6 shadow-lg w-full max-w-2xl">
@@ -42,7 +85,7 @@
                 <a href="{% url 'Weaning-list' %}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-200">Back to List</a>
             </div>
         </div>
-    </main>
+    </main> {% endcomment %}
 {% comment %} <main class="content ml-0 mt-16 p-4 transition-all duration-300">
     <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
      <h2 class="text-2xl mb-2">
@@ -89,4 +132,4 @@
     </div>
 
 </main> {% endcomment %}
-{% endblock %} 
+{% comment %} {% endblock %}  {% endcomment %}

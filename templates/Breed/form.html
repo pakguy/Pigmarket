@@ -1,3 +1,28 @@
+
+{% extends "form.html" %}
+{% block page %} 
+<main class="content">
+    <div class="table-container">
+        <h2>{% if object %}Edit{% else %}Create{% endif %} Allocation</h2>
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div class="form-control">
+                <label>{{ form.name.label_tag }}</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="error">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{% url 'Breed-list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
+
+{% comment %} 
 {% extends "firstlabel/main.html" %}
 
 {% block content %} 
@@ -14,7 +39,7 @@
                             document.querySelector("input[name='name']").classList.add("form-input", "w-full", "border", "border-gray-300", "rounded", "py-2", "px-3");
                         });
                     </script>
-                    {% if form.name.errors %}
+                    {% if form.name.errors %} 
                         <div class="text-red-500 text-sm mt-1">{{ form.name.errors }}</div>
                     {% endif %}
                 </div>
@@ -24,7 +49,7 @@
                 </div>
             </form>
         </div>
-    </main>
+    </main> {% endcomment %}
 {% comment %} 
 <main class="content ml-0 mt-16 p-4 transition-all duration-300">
     <div class="table-container bg-white border border-gray-300 rounded-md p-4 overflow-x-auto">
@@ -119,4 +144,4 @@
     <a href="{% url 'Inven-list' %}" class="btn btn-outline-secondary">Cancel</a>
 </form> {% endcomment %}
 
-{% endblock %}
+{% comment %} {% endblock %} {% endcomment %}
